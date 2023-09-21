@@ -129,6 +129,7 @@ def game(airport_name, correct_country_name, airport_name2, pelaajan_kilometrit,
         next_country = input("Anna valtion nimi: ")
         if next_country == correct_country_name:
             coins += 2
+            crimes_stopped += 1
 
     if player_choise == "2":
         coins = coins - 1
@@ -141,9 +142,14 @@ def game(airport_name, correct_country_name, airport_name2, pelaajan_kilometrit,
         )
         if next_country == correct_country_name:
             coins += 1
+            crimes_stopped +=1
         else:
             coins -= 1
-            # kilmeri fuktio
+
+        # kilometrifunktio rangaistus
+
+        distance = GD(kilometrit2, kilometrit).km
+        km_rangaistus= distance - 
     return coins, crimes_stopped, pelaajan_kilometrit, next_country
 
 print("Tervetuloa pelaamaan Lentäen Karkuteillä!")
