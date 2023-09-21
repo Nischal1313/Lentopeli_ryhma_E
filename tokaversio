@@ -107,7 +107,7 @@ def game(airport_name, correct_country_name, airport_name2, pelaajan_kilometrit,
     sql3 += " Where name = '" + airport_name2 + "'"
     kilometrit2 = suoritaHaku(sql3)
 
-    distance = GD(kilometrit2, kilometrit).km
+    right_distance = GD(kilometrit2, kilometrit).km
     pelaajan_kilometrit = 0
     coins = 0
     crimes_stopped = 0
@@ -186,3 +186,4 @@ if vanha_vai_uusi_pelaaja(user_name) == 1:
         # load old game
 
 
+# right_distance - wrong_distance * 2
