@@ -2,6 +2,37 @@ from geopy.distance import geodesic as GD
 import mysql.connector
 import sys
 
+# eurooppa (km)
+prague_berlin = 256
+berlin_firenze = 964
+firenze_reykjavik = 3070
+reykjavik_barcelona = 2974
+
+
+# afrikka (km)
+lagos_capetown = 4767
+capetown_burundi = 3569
+burundi_freetown = 4899
+freetown_cairo = 5209
+
+# aasia (km)
+calutta_kathmandu = 639
+kathmandu_doha = 3365
+doha_kualalumpur = 5910
+kualalumpur_seoul = 4601
+
+# amerikka (km)
+havanna_santiago = 6360
+santiogo_lasvegas = 8969
+lasvegas_riodejaneiro = 9975
+riodejaneiro_quebec = 8211
+
+#sanakirja: oikeat matkat
+eurooppa = {"256", "964", "3070", "2974"}
+amerikka = {"6360", "8969", "9975", "8211"}
+aasia = {"639", "3365", "5910", "4601"}
+afrikka = {"4767", "3569", "4899", "5209"}
+
 yhteys = mysql.connector.connect(
     host="localhost",
     port=3306,
@@ -63,7 +94,8 @@ def vaikeustasojamanner():
             print(
                 "Olet saapunut Eurooppaan,tervetuloa Prahan kansainväliseen lentokenttään!"
             )
-            # load level europe
+            game(prague, germany, 0, 0, 0, 0,prague)
+
 
         if easy_level == "2":
             print("Olet valinnut Amerikat.")
@@ -71,6 +103,8 @@ def vaikeustasojamanner():
             print(
                 "Olet saapunut Amerikkaan, tervetuloa Havannan kansainväliseen lentokenttään!"
             )
+            game(havanna, chile, 0, 0, 0, 0,havanna)
+
 
     if difficulty_level == "2":
         while True:
@@ -83,15 +117,19 @@ def vaikeustasojamanner():
             print(
                 "Olet saapunut Aasian,tervetuloa Kalkutan kansainväliseen lentokenttään!"
             )
-            # load level europe
+            game(calcutta, nepal, 0, 0, 0, 0, calcutta)
+
         if easy_level == "2":
             print("Olet valinnut Afrikka.")
             # print(jetski)
             print(
                 "Olet saapunut Afrikka, tervetuloa Etelä-Afrikan kansainväliseen lentokenttään!"
             )
+            game(lagos, etelä-afrikka, 0,0, 0, 0, lagos)
 
             return difficulty_level, easy_level
+
+
 
 
 def game(airport_name, correct_country_name, airport_name2, pelaajan_kilometrit, coins, crimes_stopped, location_atm):
@@ -111,7 +149,7 @@ def game(airport_name, correct_country_name, airport_name2, pelaajan_kilometrit,
     pelaajan_kilometrit = 0
     coins = 0
     crimes_stopped = 0
-    print("Tervetuloa Tsekkiin")
+    print(f"Tervetuloa {airport_name}!")
     print(pelaajan_kilometrit, coins, crimes_stopped)
     print(
         "Saamasi tiedon mukaan sinun pitäisi päättää mihin valtioon matkustat seuraavaksi."
@@ -146,10 +184,16 @@ def game(airport_name, correct_country_name, airport_name2, pelaajan_kilometrit,
         else:
             coins -= 1
 
-        # kilometrifunktio rangaistus
+        #kilometrifunktio rangaistus
 
-        distance = GD(kilometrit2, kilometrit).km
-        km_rangaistus= distance - 
+        kilometri_rangaistus = True:
+        if right_distance > distance:
+            rangaistus1 = (right_distance - distance) * 2
+
+        elif distance > right_distance:
+            rangaistus2 = (distance - right_distance) * 2
+
+
     return coins, crimes_stopped, pelaajan_kilometrit, next_country
 
 print("Tervetuloa pelaamaan Lentäen Karkuteillä!")
@@ -163,10 +207,10 @@ def vanha_vai_uusi_pelaaja(user_name,):
     kursori.execute(sql)
     tulos = kursori.fetchone()
 
-    if tulos == 1:
+    if tulos is not None:
         print(f"Welcome back{user_name}")
 
-    if tulos == 0:
+    if tulos is None:
         print(f"Welcome {user_name} to a new game.")
         vaikeustasojamanner(ekamuutuja)
         game()
@@ -174,7 +218,7 @@ def vanha_vai_uusi_pelaaja(user_name,):
     return tulos
 
 
-if vanha_vai_uusi_pelaaja(user_name) == 1:
+if vanha_vai_uusi_pelaaja(user_name) is not None:
     while True:
         print(
             f"Tervetuloa takaisin {user_name}! Haluatko aloittaa uuden pelin vai jatkaa vanhaa peliä?"
@@ -195,8 +239,12 @@ if vanha_vai_uusi_pelaaja(user_name) == 1:
 
 
 
-# right_distance = GD(kilometrit2, kilometrit).km
-# pelaajan valinta distance = GD(sijainti, sijainti2).km
+#right_distance = GD(kilometrit2, kilometrit).km
+# pelaajan valinta "distance" = GD(sijainti, sijainti2).km
 
 # sijainti = missä pelaaja on
 # sijainti2 = minne pelaaja lentää
+
+
+
+
