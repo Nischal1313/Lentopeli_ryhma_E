@@ -33,6 +33,17 @@ amerikka = {"6360", "8969", "9975", "8211"}
 aasia = {"639", "3365", "5910", "4601"}
 afrikka = {"4767", "3569", "4899", "5209"}
 
+def oikea_matka():
+    if eurooppa[0] > distance:
+        rangaistus = (eurooppa[0] - distance) * 2
+    elif distance > eurooppa[0]:
+        rangaistus = (distance - eurooppa[0]) * 2
+    elif eurooppa[0] == distance:
+        print("ei tule rangaistus!")
+
+    return rangaistus
+
+
 yhteys = mysql.connector.connect(
     host="localhost",
     port=3306,
@@ -92,10 +103,8 @@ def vaikeustasojamanner():
             print("Olet valinnut Euroopan.")
             # print(jetaski)
             print(
-                "Olet saapunut Eurooppaan,tervetuloa Prahan kansainväliseen lentokenttään!"
+                "Olet saapunut Eurooppaan, tervetuloa Prahan kansainväliseen lentokenttään!"
             )
-            game(prague, germany, 0, 0, 0, 0,prague)
-
 
         if easy_level == "2":
             print("Olet valinnut Amerikat.")
@@ -108,10 +117,11 @@ def vaikeustasojamanner():
 
     if difficulty_level == "2":
         while True:
-            easy_level = input("Valitse vaikeustason manner: Aasia(1) tai Afrikka(2):")
-            if easy_level == "1" or "2":
+            easy_level = input("Valitse vaikeustason manner: Aasia(3) tai Afrikka(4):")
+            if easy_level == "3" or "4":
                 break
-        if easy_level == "1":
+
+        if easy_level == "3":
             print("Olet valinnut Aasian.")
             # print(jetaski)
             print(
@@ -119,7 +129,7 @@ def vaikeustasojamanner():
             )
             game(calcutta, nepal, 0, 0, 0, 0, calcutta)
 
-        if easy_level == "2":
+        if easy_level == "4":
             print("Olet valinnut Afrikka.")
             # print(jetski)
             print(
@@ -127,23 +137,32 @@ def vaikeustasojamanner():
             )
             game(lagos, etelä-afrikka, 0,0, 0, 0, lagos)
 
-            return difficulty_level, easy_level
+            return easy_level
+
+
+oikea_manner = vaikeustasojamanner()
 
 
 
-
-def game(airport_name, correct_country_name, airport_name2, pelaajan_kilometrit, coins, crimes_stopped, location_atm):
+def get_first_tip():
     sql = "Select tip_1, From airport "
     sql += " where name = '" + airport_name + "'"
     tulos = suoritaHaku(sql)
     print(tulos)
+    return
+
+def youre_here():
     sql2 = "SELECT latitude_deg, longitude_deg from airport"
     sql2 += " Where name = '" + airport_name + "'"
     sijainti = suoritaHaku(sql2)
+    return sijainti
 
-    sql3 = "SELECT latitude_deg, longitude_deg from airport"
-    sql3 += " Where name = '" + airport_name2 + "'"
-    sijainti2 = suoritaHaku(sql3)
+
+def game(airport_name, correct_country_name, airport_name2, pelaajan_kilometrit, coins, crimes_stopped, location_atm):
+
+    get_first_tip(airport_name)
+
+    youre_here(location_atm)
 
     distance = GD(sijainti2, sijainti).km
     pelaajan_kilometrit = 0
@@ -194,7 +213,10 @@ def game(airport_name, correct_country_name, airport_name2, pelaajan_kilometrit,
             rangaistus2 = (distance - right_distance) * 2
 
 
-    return coins, crimes_stopped, pelaajan_kilometrit, next_country
+   return airport_name, pelaajan_kilometrit,coins, crimes_stopped, location_atm
+
+
+
 
 print("Tervetuloa pelaamaan Lentäen Karkuteillä!")
 plane_art()
@@ -238,12 +260,6 @@ if vanha_vai_uusi_pelaaja(user_name) is not None:
 
 
 
-
-#right_distance = GD(kilometrit2, kilometrit).km
-# pelaajan valinta "distance" = GD(sijainti, sijainti2).km
-
-# sijainti = missä pelaaja on
-# sijainti2 = minne pelaaja lentää
 
 
 
