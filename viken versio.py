@@ -8,6 +8,7 @@ berlin_firenze = 964
 firenze_reykjavik = 3070
 reykjavik_barcelona = 2974
 
+
 # afrikka (km)
 lagos_capetown = 4767
 capetown_burundi = 3569
@@ -26,6 +27,11 @@ santiogo_lasvegas = 8969
 lasvegas_riodejaneiro = 9975
 riodejaneiro_quebec = 8211
 
+#sanakirja: oikeat matkat
+eurooppa = {"256", "964", "3070", "2974"}
+amerikka = {"6360", "8969", "9975", "8211"}
+aasia = {"639", "3365", "5910", "4601"}
+afrikka = {"4767", "3569", "4899", "5209"}
 
 yhteys = mysql.connector.connect(
     host="localhost",
@@ -201,10 +207,10 @@ def vanha_vai_uusi_pelaaja(user_name,):
     kursori.execute(sql)
     tulos = kursori.fetchone()
 
-    if tulos == 1:
+    if tulos is not None:
         print(f"Welcome back{user_name}")
 
-    if tulos == 0:
+    if tulos is None:
         print(f"Welcome {user_name} to a new game.")
         vaikeustasojamanner(ekamuutuja)
         game()
@@ -212,7 +218,7 @@ def vanha_vai_uusi_pelaaja(user_name,):
     return tulos
 
 
-if vanha_vai_uusi_pelaaja(user_name) == 1:
+if vanha_vai_uusi_pelaaja(user_name) is not None:
     while True:
         print(
             f"Tervetuloa takaisin {user_name}! Haluatko aloittaa uuden pelin vai jatkaa vanhaa peliä?"
