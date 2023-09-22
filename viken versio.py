@@ -47,9 +47,9 @@ def oikea_matka():
 yhteys = mysql.connector.connect(
     host="localhost",
     port=3306,
-    database="flight_game",
+    database="karkuteilla",
     user="root",
-    password="METROPOLIA13",
+    password="maailmanilmaa",
     autocommit=True,
 )
 
@@ -204,16 +204,7 @@ def game(airport_name, correct_country_name, airport_name2, pelaajan_kilometrit,
             coins -= 1
 
         #kilometrifunktio rangaistus
-
-        kilometri_rangaistus = True:
-        if right_distance > distance:
-            rangaistus1 = (right_distance - distance) * 2
-
-        elif distance > right_distance:
-            rangaistus2 = (distance - right_distance) * 2
-
-
-   return airport_name, pelaajan_kilometrit,coins, crimes_stopped, location_atm
+        return airport_name, pelaajan_kilometrit,coins, crimes_stopped, location_atm
 
 
 
@@ -224,7 +215,8 @@ user_name = str(input("Anna käyttäjätunnus: "))
 
 
 def vanha_vai_uusi_pelaaja(user_name,):
-    sql = "Select 'nimi', From game"
+    sql = "Select screen_name From game"
+    sql += f" where screen_name = '{user_name}'"
     kursori = yhteys.cursor()
     kursori.execute(sql)
     tulos = kursori.fetchone()
