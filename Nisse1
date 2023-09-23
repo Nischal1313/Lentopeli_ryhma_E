@@ -69,8 +69,9 @@ def suoritaHaku(sql):
 
 def vaikeustasojamanner():
     while True:
+        print("Haluatko pelata pelin helpolla(1) vai vaikealla(2) vaikeustasolla?")
         difficulty_level = input(
-            str("Haluatko pelata pelin helpolla(1) vai vaikealla(2) vaikeustasolla? ")
+            str("1: Eurooppa tai Amerikat, 2: Aasia tai Afrikka: ")
         )
         if difficulty_level == "1" or difficulty_level == "2":
             break
@@ -118,17 +119,17 @@ def vaikeustasojamanner():
             return easy_level
 
 
-def get_first_tip():
+def get_first_tip(airport_name):
     sql = "Select tip_1, From airport "
-    sql += " where name = '" + airport_name + "'"
+    sql += f" where name = '{airport_name}'"
     tulos = suoritaHaku(sql)
     print(tulos)
     return
 
 
-def youre_here():
+def youre_here(airport_name):
     sql2 = "SELECT latitude_deg, longitude_deg from airport"
-    sql2 += " Where name = '" + airport_name + "'"
+    sql2 += " Where name = '{airport_name}'"
     sijainti = suoritaHaku(sql2)
     return sijainti
 
@@ -136,22 +137,22 @@ def youre_here():
 def game(
     airport_name,
     correct_country_name,
-    airport_name2,
     right_distance,
     coins,
     crimes_stopped,
     location_atm,
 ):
+    pelaajan_kilometrit = 0
+    coins = 0
+    crimes_stopped = 0
     get_first_tip(airport_name)
 
     youre_here(location_atm)
 
-    distance = GD(sijainti2, sijainti).km
-    pelaajan_kilometrit = 0
-    coins = 0
-    crimes_stopped = 0
-    print(f"Tervetuloa {airport_name}!")
-    print(pelaajan_kilometrit, coins, crimes_stopped)
+    distance = GD()#Onko tällä enään tarkoitusta vai ei, jos on eikö tää pitäs olla alhaalla, kun saadaan tieto
+    #minne pelaaja haluaa matkustaa ).km
+
+    print(f"Sinun stats KM: {pelaajan_kilometrit}, HETACOINS: {coins}, Rikokset pysäytetty {crimes_stopped}")
     print(
         "Saamasi tiedon mukaan sinun pitäisi päättää mihin valtioon matkustat seuraavaksi."
     )
@@ -215,18 +216,31 @@ user_name = str(input("Anna käyttäjätunnus: "))
 
 
 def vanha_vai_uusi_pelaaja(user_name,):
-    sql = f"Select '{user_name}', From game"
+    sql = f"Select screen_name From game where screen_name = '{user_name}'"
     kursori = yhteys.cursor()
     kursori.execute(sql)
     tulos = kursori.fetchone()
 
     if tulos is not None:
-        print(f"Welcome back{user_name}")
+        print(f"Tervetuloa takaisin {user_name}!")
 
     if tulos is None:
-        print(f"Welcome {user_name} to a new game.")
-        vaikeustasojamanner()
-        game()
+        print(f"Tervetuloa {user_name} uuteen peliin")
+#Tähän tulee Hetan kirjoittama intro
+        pelaajan_taso_valinta = vaikeustasojamanner()[0]
+        # Nyt voi käyttää tota pelaajan_taso_valinta muutujaa katsomaan mistä pelaaja haluaa aloittaa pelin.
+        # 1 = EU, 2 = NA, 3 = Asia, 4 = Africa
+        if pelaajan_taso_valinta == "1":
+            game()  # tähän pitää nyt latautua Euroopan
+        
+        if pelaajan_taso_valinta == "2":
+            game()  # Tähän latautuu Amerikat taso
+        
+        if pelaajan_taso_valinta == "3":
+            game()  # Tähän latautuu Aasia
+        
+        else:
+            game()  # Tähän latautuu Afrikka
 
     return tulos
 
@@ -234,7 +248,7 @@ def vanha_vai_uusi_pelaaja(user_name,):
         # load old game
 
 
-if vanha_vai_uusi_pelaaja(user_name) is not None:
+if vanha_vai_uusi_pelaaja(user_name) is not None: #KOODI KAATUU TÄHÄN
     while True:
         print(
             f"Tervetuloa takaisin {user_name}! Haluatko aloittaa uuden pelin vai jatkaa vanhaa peliä?"
