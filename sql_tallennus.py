@@ -9,20 +9,18 @@ yhteys = mysql.connector.connect(
     autocommit=True,
 )
 
-def suoritaHaku(sql):
+def suoritaKomento(sql):
     kursori = yhteys.cursor()
     kursori.execute(sql)
-    tulos = kursori.fetchall()
-    return tulos
+    return
 
 
-def tallennus(coins, pelaajan_kilometrit, location_atm, crimes_stopped, coin_used, user_name):
-    # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin
-    sql = f"update game set coin = '{coins}', km_travelled = '{pelaajan_kilometrit}',"
-    sql += f" location = '{location_atm}', crimes_stopped = '{crimes_stopped}', coin_used = '{coin_used}'"
+def tallennus(coins, pelaajan_kilometrit, location_atm, crimes_stopped, coin_used, user_name, continent):
+    # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin.
+    # continent arvo tarvii tallentaa vaan kerran, se pitää katsoa jos ei halua, että se joka kerralla tallentuu
+    sql = f"update game set coin = '{coins}', km_travelled = '{pelaajan_kilometrit}', location = '{location_atm}',"
+    sql += f" crimes_stopped = '{crimes_stopped}', coin_used = '{coin_used}', continent = '{continent}'"
     sql += f" where screen_name = '{user_name}'"
-    suoritaHaku(sql)  # pitääkö tehdä oma, kun ei tarvitse hakea mitään dataa?
-    # kursori = yhteys.cursor()
-    # kursori.execute(sql)
+    suoritaKomento(sql)
     return  # ei kai tarvii palauttaa mitään?
 
