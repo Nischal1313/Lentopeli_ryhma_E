@@ -273,6 +273,10 @@ if vanha_vai_uusi_pelaaja(user_name) is not None: #KOODI KAATUU TÄHÄN
             "Paina 1, jos haluat aloittaa uuden pelin. Paina 2, jos haluat jatkaa vanhaa peliä: "
         )
         if new_or_oldgame == "1":
+
+            sql = f" delete from game where screen_name = '{user_name}'"
+            suoritaKomento(sql)
+            # nyt olisi vanhat tiedot poistettu
             pelaajan_taso_valinta = vaikeustasojamanner()[0]
             # Tämä antaa meille tiedon siitä mitä mannerta on valittu
             # joka antaa tietoa game funktiolle, oikeasta mantereesta.
@@ -293,7 +297,7 @@ if vanha_vai_uusi_pelaaja(user_name) is not None: #KOODI KAATUU TÄHÄN
 
             break
         if new_or_oldgame == "2":
-            print("oho")
+            
         #Ade kirjoittaa tähän oikean SQL lauseen. Voidaan yhdessä sitten katsoa, jatkuuko peli oikein, ja mitä sen jälkeen.
 
 else:
@@ -304,5 +308,18 @@ else:
     game()
 
 
+def oikea_matka():
+    if eurooppa[0] > distance:
+        rangaistus = (eurooppa[0] - distance) * 2
+    elif distance > eurooppa[0]:
+        rangaistus = (distance - eurooppa[0]) * 2
+    elif eurooppa[0] == distance:
+        print("ei tule rangaistusta!")
 
+    return rangaistus
+
+# sql = "select longitude_deg, latitude_deg"
+# sql += " from airport where airport.iso_country"
+# sql += " = (select iso_country from country"
+# sql += f" where country.name = '{sijainti2}')"
 
