@@ -314,5 +314,8 @@ else:
 
 game("Václav Havel Airport Prague","germany", 256,4, 0, "prague", 0,)
 
-
+game("Václav Havel Airport Prague","germany", 256, 4, 0, "prague", 0,)
+game("Berlin Brandenburg Airport","italy", 964, 4, 0, "berlin", 0,)
+game("Peretola Airport","iceland", 3070, 4, 0, "firenze", 0,)
+game("Kelavik International Airport","spain", 2974, 4, 0, "reykjavik", 0,)
 
