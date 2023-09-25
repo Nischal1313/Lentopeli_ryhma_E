@@ -293,7 +293,9 @@ if vanha_vai_uusi_pelaaja(user_name) is not None: #KOODI KAATUU TÄHÄN
 
             break
         if new_or_oldgame == "2":
-            print("oho")
+            sql = f" delete from game where screen_name = '{user_name}'"
+            suoritaKomento(sql)
+            # tästä alkaisi uusi peli? pitää kikkailla se
         #Ade kirjoittaa tähän oikean SQL lauseen. Voidaan yhdessä sitten katsoa, jatkuuko peli oikein, ja mitä sen jälkeen.
 
 else:
