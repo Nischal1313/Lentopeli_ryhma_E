@@ -273,6 +273,10 @@ if vanha_vai_uusi_pelaaja(user_name) is not None: #KOODI KAATUU TÄHÄN
             "Paina 1, jos haluat aloittaa uuden pelin. Paina 2, jos haluat jatkaa vanhaa peliä: "
         )
         if new_or_oldgame == "1":
+
+            sql = f" delete from game where screen_name = '{user_name}'"
+            suoritaKomento(sql)
+            # nyt olisi vanhat tiedot poistettu
             pelaajan_taso_valinta = vaikeustasojamanner()[0]
             # Tämä antaa meille tiedon siitä mitä mannerta on valittu
             # joka antaa tietoa game funktiolle, oikeasta mantereesta.
@@ -293,9 +297,7 @@ if vanha_vai_uusi_pelaaja(user_name) is not None: #KOODI KAATUU TÄHÄN
 
             break
         if new_or_oldgame == "2":
-            sql = f" delete from game where screen_name = '{user_name}'"
-            suoritaKomento(sql)
-            # tästä alkaisi uusi peli? pitää kikkailla se
+            
         #Ade kirjoittaa tähän oikean SQL lauseen. Voidaan yhdessä sitten katsoa, jatkuuko peli oikein, ja mitä sen jälkeen.
 
 else:
