@@ -304,5 +304,15 @@ else:
     game()
 
 
+def oikea_matka():
+    if eurooppa[0] > distance:
+        rangaistus = (eurooppa[0] - distance) * 2
+    elif distance > eurooppa[0]:
+        rangaistus = (distance - eurooppa[0]) * 2
+    elif eurooppa[0] == distance:
+        print("ei tule rangaistusta!")
+
+    return rangaistus
+
 
 
