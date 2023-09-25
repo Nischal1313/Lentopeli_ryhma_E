@@ -312,10 +312,24 @@ else:
     # 3 = Asia, 4 = Africa
     game()
 
-game("Václav Havel Airport Prague","germany", 256,4, 0, "prague", 0,)
-
+#eurooppa
 game("Václav Havel Airport Prague","germany", 256, 4, 0, "prague", 0,)
 game("Berlin Brandenburg Airport","italy", 964, 4, 0, "berlin", 0,)
 game("Peretola Airport","iceland", 3070, 4, 0, "firenze", 0,)
 game("Kelavik International Airport","spain", 2974, 4, 0, "reykjavik", 0,)
+#afrikka
+game("Murtala Muhammed International Airport","south_africa", 4767, 4, 0, "lagos", 0,)
+game("Cape Town International Airport ","bujumbura", 3569, 4, 0, "capetown", 0,)
+game("Bujumbura International Airport","sierra_leone", 4899, 4, 0, "burundi", 0,)
+game("Lungi International Airport ","egypt", 5209, 4, 0, "freetown", 0,)
+#aasia
+game("Kolkata Airport", "nepal", 639, 4, 0, "calkutta", 0,)
+game("Tribhuvan International Airport", "gatar", 3365, 4, 0, "kathmandu", 0,)
+game("Hamad International Airport ","malaysia", 5910, 4, 0, "doha", 0,)
+game("Kuala Lumpur International Airport","south_korea", 4601, 4, 0, "kualalumpur", 0,)
+#amerikka
+game("José Marti International Airport", "chile", 6360, 4, 0, "havanna", 0,)
+game("Santiago de Chile Airport", "US", 8969, 4, 0, "santiago", 0,)
+game("McCarran International Airport","brazil", 9975, 4, 0, "lasvegas", 0,)
+game("Galeão International Airport","canada", 8211, 4, 0, "riodejaneiro", 0,)
 
