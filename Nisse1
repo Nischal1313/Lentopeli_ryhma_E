@@ -318,5 +318,8 @@ def oikea_matka():
 
     return rangaistus
 
-
+# sql = "select longitude_deg, latitude_deg"
+# sql += " from airport where airport.iso_country"
+# sql += " = (select iso_country from country"
+# sql += f" where country.name = '{sijainti2}')"
 
