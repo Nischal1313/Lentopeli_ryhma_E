@@ -312,6 +312,7 @@ else:
     # 3 = Asia, 4 = Africa
     game()
 
+game("Václav Havel Airport Prague","germany", 256,4, 0, "prague", 0,)
 
 
 
