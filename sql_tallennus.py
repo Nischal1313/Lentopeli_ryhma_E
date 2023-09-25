@@ -22,5 +22,5 @@ def tallennus(coins, pelaajan_kilometrit, location_atm, crimes_stopped, coin_use
     sql += f" crimes_stopped = '{crimes_stopped}', coin_used = '{coin_used}', continent = '{continent}'"
     sql += f" where screen_name = '{user_name}'"
     suoritaKomento(sql)
-    return  # ei kai tarvii palauttaa mitään?
+    return
 
