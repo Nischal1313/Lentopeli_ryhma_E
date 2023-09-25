@@ -26,6 +26,21 @@ santiogo_lasvegas = 8969
 lasvegas_riodejaneiro = 9975
 riodejaneiro_quebec = 8211
 
+def oikea_matka(distance):
+    if eurooppa[0] > distance:
+        rangaistus = (eurooppa[0] - distance) * 2
+    elif distance > eurooppa[0]:
+        rangaistus = (distance - eurooppa[0]) * 2
+    return rangaistus
+
+def tallennus(coins, pelaajan_kilometrit, location_atm, crimes_stopped, coin_used, user_name):
+    # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin
+    sql = f"update game set coin = '{coins}', km_travelled = '{pelaajan_kilometrit}',"
+    sql += f" location = '{location_atm}', crimes_stopped = '{crimes_stopped}', coin_used = '{coin_used}'"
+    sql += f" where screen_name = '{user_name}'"
+    suoritaKomento(sql)
+    return  # ei kai tarvii palauttaa mitään? #Tätä ei ole viellä kutsuttu.
+
 
 yhteys = mysql.connector.connect(
     host="localhost",
@@ -65,22 +80,6 @@ def suoritaHaku(sql):
     kursori.execute(sql)
     tulos = kursori.fetchall()
     return tulos
-
-
-def suoritaKomento(sql):
-    kursori = yhteys.cursor()
-    kursori.execute(sql)
-    return
-
-
-def tallennus(coins, pelaajan_kilometrit, location_atm, crimes_stopped, coin_used, user_name):
-    # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin
-    sql = f"update game set coin = '{coins}', km_travelled = '{pelaajan_kilometrit}',"
-    sql += f" location = '{location_atm}', crimes_stopped = '{crimes_stopped}', coin_used = '{coin_used}'"
-    sql += f" where screen_name = '{user_name}'"
-    suoritaKomento(sql)
-    return  # ei kai tarvii palauttaa mitään?
-
 
 
 def vaikeustasojamanner():
@@ -132,7 +131,7 @@ def vaikeustasojamanner():
             print(
                 "Olet saapunut Nigeriaan, tervetuloa Murtala Muhammedin kansainväliseen lentokenttään!"
             )
-            return easy_level
+    return easy_level
 
 
 def get_first_tip(airport_name):
@@ -157,18 +156,16 @@ def game(
     coins,
     crimes_stopped,
     location_atm,
+    coin_used,
 ):
     pelaajan_kilometrit = 0
     coins = 0
     crimes_stopped = 0
     get_first_tip(airport_name)
 
-    youre_here(location_atm)
-
-    distance = GD()#Onko tällä enään tarkoitusta vai ei, jos on eikö tää pitäs olla alhaalla, kun saadaan tieto
-    #minne pelaaja haluaa matkustaa ).km
-
-    print(f"Sinun stats KM: {pelaajan_kilometrit}, HETACOINS: {coins}, Rikokset pysäytetty {crimes_stopped}")
+    print(
+        f"Sinun stats KM: {pelaajan_kilometrit}, HETACOINS: {coins}, Rikokset pysäytetty {crimes_stopped}"
+    )
     print(
         "Saamasi tiedon mukaan sinun pitäisi päättää mihin valtioon matkustat seuraavaksi."
     )
@@ -186,11 +183,18 @@ def game(
         if next_country == correct_country_name:
             coins += 2
             crimes_stopped += 1
+        sijainti1 = youre_here(f"{airport_name}")
+        sijainti2 = youre_going(f"{next_country}")
+
+        distance = GD(sijainti1, sijainti2).km
+        print(distance)
+        # Onko tällä enään tarkoitusta vai ei, jos on eikö tää pitäs olla alhaalla, kun saadaan tieto
+        # minne pelaaja haluaa matkustaa ).km
 
     if player_choise == "2":
         coins = coins - 1
-        sql = "Select tip_2, From airport "
-        sql += " where name = '" + airport_name + "'"
+        sql = "Select tip_2 From airport "
+        sql += f" where name = '{airport_name}'"
         tulos = suoritaHaku(sql)
         print(tulos)
         next_country = input(
@@ -199,30 +203,36 @@ def game(
         if next_country == correct_country_name:
             crimes_stopped += 1
             kierros = 1
+            sijainti1 = youre_here(f"{airport_name}")
+            sijainti2 = youre_going(f"{next_country}")
+
+            distance = GD(sijainti1, sijainti2).km
+            print(distance)
+            # Onko tällä enään tarkoitusta vai ei, jos on eikö tää pitäs olla alhaalla, kun saadaan tieto
+            # minne pelaaja haluaa matkustaa ).km
         else:
             coins -= 1
 
-        #Funktion pitää palauttaa pelaajan_kilometrit, jonka voi ottaa samalla fuktion parametrilla, kun right_distance
-        #jos pelaaja vastaa väärin sitten voi mennä laskemaan tuon fuktion, niin sitä voisi nyt laittaa tuohon
-        #if lauseeseen, joka kattoo oliko pelaajan vastus oikea vai ei
+        # Funktion pitää palauttaa pelaajan_kilometrit, jonka voi ottaa samalla fuktion parametrilla, kun right_distance
+        # jos pelaaja vastaa väärin sitten voi mennä laskemaan tuon fuktion, niin sitä voisi nyt laittaa tuohon
+        # if lauseeseen, joka kattoo oliko pelaajan vastus oikea vai ei
 
+        # Meidän olisi myös hyvä kattoo, että monesko kierro pelissä on meneillään. Jos kierroksia on jo mennyt 4 ja
+        # pelaaja ei ole onnistunut pysättämään 3/4 rikosta niin se olisi automaattinen game over
 
-        #Meidän olisi myös hyvä kattoo, että monesko kierro pelissä on meneillään. Jos kierroksia on jo mennyt 4 ja
-        #pelaaja ei ole onnistunut pysättämään 3/4 rikosta niin se olisi automaattinen game over
-
-        #Pitäisi myös katttoo if lausekkeella, että meneekö coins nollaan ja se viesti mistä oli puhetta, että
-        #tulee pomolta viesti, että seuraava taso täytyy läpäistä ilman vinkkejä tai jtn sinne päin
-
+        # Pitäisi myös katttoo if lausekkeella, että meneekö coins nollaan ja se viesti mistä oli puhetta, että
+        # tulee pomolta viesti, että seuraava taso täytyy läpäistä ilman vinkkejä tai jtn sinne päin
 
         # kilometrifunktio rangaistus
         if right_distance > distance:
             rangaistus = (right_distance - distance) * 2
+            pelaajan_kilometrit = rangaistus
 
         if distance > right_distance:
             rangaistus = (distance - right_distance) * 2
+            pelaajan_kilometrit = rangaistus
 
-
-    return coins, crimes_stopped, pelaajan_kilometrit, next_country
+    return coins, crimes_stopped, pelaajan_kilometrit, next_country, coin_used
 
 
 print("Tervetuloa pelaamaan Lentäen Karkuteillä!")
@@ -243,7 +253,7 @@ def vanha_vai_uusi_pelaaja(user_name,):
     if tulos is None:
         print(f"Tervetuloa {user_name} uuteen peliin")
 #Tähän tulee Hetan kirjoittama intro
-        pelaajan_taso_valinta = vaikeustasojamanner()[0]
+        pelaajan_taso_valinta = vaikeustasojamanner()[0] #Koodi kaattuu tähän
         # Nyt voi käyttää tota pelaajan_taso_valinta muutujaa katsomaan mistä pelaaja haluaa aloittaa pelin.
         # 1 = EU, 2 = NA, 3 = Asia, 4 = Africa
         if pelaajan_taso_valinta == "1":
@@ -258,7 +268,6 @@ def vanha_vai_uusi_pelaaja(user_name,):
         else:
             game()  # Tähän latautuu Afrikka
 
-    return tulos
 
 
         # load old game
@@ -273,10 +282,6 @@ if vanha_vai_uusi_pelaaja(user_name) is not None: #KOODI KAATUU TÄHÄN
             "Paina 1, jos haluat aloittaa uuden pelin. Paina 2, jos haluat jatkaa vanhaa peliä: "
         )
         if new_or_oldgame == "1":
-
-            sql = f" delete from game where screen_name = '{user_name}'"
-            suoritaKomento(sql)
-            # nyt olisi vanhat tiedot poistettu
             pelaajan_taso_valinta = vaikeustasojamanner()[0]
             # Tämä antaa meille tiedon siitä mitä mannerta on valittu
             # joka antaa tietoa game funktiolle, oikeasta mantereesta.
@@ -297,7 +302,7 @@ if vanha_vai_uusi_pelaaja(user_name) is not None: #KOODI KAATUU TÄHÄN
 
             break
         if new_or_oldgame == "2":
-            
+            print("oho")
         #Ade kirjoittaa tähän oikean SQL lauseen. Voidaan yhdessä sitten katsoa, jatkuuko peli oikein, ja mitä sen jälkeen.
 
 else:
@@ -308,18 +313,5 @@ else:
     game()
 
 
-def oikea_matka():
-    if eurooppa[0] > distance:
-        rangaistus = (eurooppa[0] - distance) * 2
-    elif distance > eurooppa[0]:
-        rangaistus = (distance - eurooppa[0]) * 2
-    elif eurooppa[0] == distance:
-        print("ei tule rangaistusta!")
 
-    return rangaistus
-
-# sql = "select longitude_deg, latitude_deg"
-# sql += " from airport where airport.iso_country"
-# sql += " = (select iso_country from country"
-# sql += f" where country.name = '{sijainti2}')"
 
