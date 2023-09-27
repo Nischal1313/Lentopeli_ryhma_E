@@ -353,7 +353,6 @@ def if_country_exist(next_country):
   return tulos
 
 
-
 while True:
     vastaus = if_country_exist(next_country)
     if not vastaus:
