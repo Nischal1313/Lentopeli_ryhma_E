@@ -346,4 +346,17 @@ def oikea_matka(distance, oikeamatka):
 
 
 
+def if_country_exist(next_country):
+  sql = "select name from country "
+  sql += "where name = '" + next_country + "'"
+  tulos = suoritaHaku(sql)
+  return tulos
 
+
+
+while True:
+    vastaus = if_country_exist(next_country)
+    if not vastaus:
+        print(str(("Anna valtion nimi: ")))
+    else:
+        break
