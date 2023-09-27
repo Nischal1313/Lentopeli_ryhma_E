@@ -25,6 +25,6 @@ def if_country_exist(next_country):
 while True:
     vastaus = if_country_exist(next_country)
     if not vastaus:
-        print(str(("Anna valtion nimi: ")))
+        next_country = print(str(("Anna valtion nimi: ")))
     else:
         break
