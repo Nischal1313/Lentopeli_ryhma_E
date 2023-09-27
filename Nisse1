@@ -335,6 +335,15 @@ else:
     # 3 = Asia, 4 = Africa
     game()
 
+def oikea_matka(distance, oikeamatka):
+    if oikeamatka > distance:
+        rangaistus = (oikeamatka - distance) * 2
+    if distance > oikeamatka:
+        rangaistus = (distance - oikeamatka) * 2
+    if distance == oikeamatka:
+        rangaistus = rangaistus
+    return rangaistus
+
 
 
 
