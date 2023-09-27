@@ -22,12 +22,9 @@ def if_country_exist(next_country):
   return tulos
 
 
-
 while True:
-    next_country = input("Anna maa minne haluat matkustaa: ")
     vastaus = if_country_exist(next_country)
     if not vastaus:
-        print("Väärä maa")
+        print(str(("Anna valtion nimi: ")))
     else:
-        print("Tervetuloa...")
         break
