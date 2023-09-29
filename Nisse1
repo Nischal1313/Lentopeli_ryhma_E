@@ -66,9 +66,9 @@ def tallennus(coins : int, pelaajan_kilometrit : int, location_atm : str, crimes
 yhteys = mysql.connector.connect(
     host="localhost",
     port=3306,
-    database="karkuteilla_database",
+    database="karkuteilla2",
     user="root",
-    password="METROPOLIA13",
+    password="maailmanilmaa",
     autocommit=True,
 )
 

@@ -102,9 +102,9 @@ def tallennus(coins, pelaajan_kilometrit, location_atm, crimes_stopped, coin_use
 yhteys = mysql.connector.connect(
     host="localhost",
     port=3306,
-    database="karkuteilla_database",
+    database="karkuteilla2",
     user="root",
-    password="METROPOLIA13",
+    password="maailmanilmaa",
     autocommit=True,
 )
 
@@ -134,7 +134,7 @@ def plane_art():
 
 
 def get_first_tip(airport_name):
-    sql = "Select tip_1, From airport"
+    sql = "Select tip_1 From airport"
     sql += f" Where name = '{airport_name}'"
     tulos = suoritaHaku(sql)
     print(tulos)
@@ -349,7 +349,8 @@ if not vastaus:
 
 
         if pelaajan_taso_valinta == "1":
-            coin1, crime_stopped1, km, location_atm, round_nro = game("Václav Havel Airport Prague", "Saksa", 256, 4, 0, "prague", 0, 0)
+            coin1, crime_stopped1, km, location_atm, round_nro = (
+                game("Václav Havel Airport Prague", "Saksa", 256, 4, 0, "prague", 0, 0))
             
             coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
                 "Berlin Brandenburg Airport",
