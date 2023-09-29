@@ -1,13 +1,13 @@
 import mysql.connector
 from geopy.distance import geodesic as GD
 
-def youre_here(airport_name):
+def youre_here(airport_name : str):
     sql2 = "SELECT latitude_deg, longitude_deg from airport"
     sql2 += f" Where name = '{airport_name}'"
     sijainti = suoritaHaku(sql2)
     return sijainti
 
-def oikea_matka(distance, oikeamatka):
+def oikea_matka(distance : int, oikeamatka : int):
     if oikeamatka > distance:
         rangaistus = (oikeamatka - distance) * 2
     if distance > oikeamatka:
@@ -18,7 +18,7 @@ def oikea_matka(distance, oikeamatka):
 
 
 
-def youre_going(germany):
+def youre_going(germany : str):
     sql = "select longitude_deg, latitude_deg"
     sql += " from airport where airport.iso_country"
     sql += " = (select iso_country from country"
@@ -28,7 +28,7 @@ def youre_going(germany):
 
 
 
-def get_first_tip(airport_name):
+def get_first_tip(airport_name : str):
     sql = "Select tip_1 From airport "
     sql += f" where Name = '{airport_name}'"
     tulos = suoritaHaku(sql)
@@ -68,7 +68,7 @@ def plane_art():
     )
 
 
-def suoritaHaku(sql):
+def suoritaHaku(sql : str):
     kursori = yhteys.cursor()
     kursori.execute(sql)
     tulos = kursori.fetchall()
@@ -76,14 +76,14 @@ def suoritaHaku(sql):
 
 
 def game(
-    airport_name,
-    correct_country_name,
-    right_distance,
-    coins,
-    crimes_stopped,
-    location_atm,
-    pelaajan_kilometrit,
-    rounds_played
+    airport_name : str,
+    correct_country_name : str,
+    right_distance : int,
+    coins : int,
+    crimes_stopped : int,
+    location_atm : str,
+    pelaajan_kilometrit : int,
+    rounds_played : int
 ):
     rounds_played += 1
     print("")
