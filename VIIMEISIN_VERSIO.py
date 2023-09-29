@@ -87,7 +87,7 @@ def if_amerikka():
 
 def if_eurooppa():
     EU_coin1, crime_stopped1, km, location_atm, round_nro = (
-        game("Václav Havel Airport Praguet", "Saksa", 256,
+        game("Václav Havel Airport Prague", "Saksa", 256,
              4, 0, "Praha", 0, 0, ))
 
     EU_coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
@@ -214,7 +214,6 @@ def get_first_tip(airport_name):
     sql = "Select tip_1 From airport"
     sql += f" Where name = '{airport_name}'"
     tulos = suoritaHaku(sql)
-    print(tulos)
     return tulos
 
 
