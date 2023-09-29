@@ -24,9 +24,9 @@ def suoritaHaku(sql):
 
 # Eurooppa (km)
 prague_berlin = 256
-berlin_firenze = 964
-firenze_reykjavik = 3070
-reykjavik_barcelona = 2974
+berlin_reykjavik = 2412
+reykjavik_firenze = 3071
+firenze_barcelona = 799
 
 # game("Václav Havel Airport Prague","germany", 256, 4, 0, "prague", 0,0)
 # game("Berlin Brandenburg Airport","italy", 964, 4, 0, "berlin", 0,0)
@@ -407,10 +407,7 @@ end_game(crime_stopped4, coin4, km3, location_atm3)
             game() #Tähän latautuu Aasia
 
         else:
-            coin1, crime_stopped1, km, location_atm, round_nro = game("Murtala Muhammed International Airport",
-                "Nigeria", 4767, 4,
-                0, "Nigeria", 0,
-                0 ))))#Tähän latautuu Afrikka
+            game() #Tähän latautuu Afrikka
 
         break
 
@@ -424,40 +421,60 @@ US_coin
 AF_coin
 
     # Amerikka
-coin1, crime_stopped1, km, location_atm, round_nro = (
+AA_coin1, crime_stopped1, km, location_atm, round_nro = (
     game("José Marti International Airport", "Chile", "6360",
          4, 0, "Havanna", 0, 0,))
 
-coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
+AA_coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
     game("Santiago de Chile Airport", "US",
-         8969, coin1, crime_stopped1, location_atm, km, round_nro))
+         8969, AA_coin1, crime_stopped1, location_atm, km, round_nro))
 
-coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
+AA_coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
 game("McCarran International Airport", "Brasilia",
-     9975, coin2, crime_stopped2, location_atm1, km1, round_nro1))
+     9975, AA_coin2, crime_stopped2, location_atm1, km1, round_nro1))
 
-coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
+AA_coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
 game("Galeão International Airport", "Kanada",
-     8211, coin3, crime_stopped3, location_atm2, km2, round_nro2))
+     8211, AA_coin3, crime_stopped3, location_atm2, km2, round_nro2))
 
-end_game(crime_stopped4, coin4, km3, location_atm3)
+end_game(crime_stopped4, AA_coin4, km3, location_atm3)
 
 
-# Eurooppa
-coin1, crime_stopped1, km, location_atm, round_nro = (
+    # Eurooppa
+EU_coin1, crime_stopped1, km, location_atm, round_nro = (
     game("Václav Havel Airport Praguet", "Saksa", "256",
          4, 0, "Praha", 0, 0,))
 
-coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
+EU_coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
     game("Berlin Brandenburg Airport", "Islanti",
-         8969, coin1, crime_stopped1, location_atm, km, round_nro))
+         2412, EU_coin1, crime_stopped1, location_atm, km, round_nro))
 
-coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
-game("McCarran International Airport", "Brasilia",
-     9975, coin2, crime_stopped2, location_atm1, km1, round_nro1))
+EU_coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
+game("Kelavik International Airport", "Italia",
+     3071, EU_coin2, crime_stopped2, location_atm1, km1, round_nro1))
 
-coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
-game("Galeão International Airport", "Kanada",
-     8211, coin3, crime_stopped3, location_atm2, km2, round_nro2))
+EU_coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
+game("Peretola Airport", "Espanja",
+     799, EU_coin3, crime_stopped3, location_atm2, km2, round_nro2))
 
-end_game(crime_stopped4, coin4, km3, location_atm3)
+end_game(crime_stopped4, EU_coin4, km3, location_atm3)
+
+
+    # Afrikka
+EU_coin1, crime_stopped1, km, location_atm, round_nro = (
+    game("Václav Havel Airport Praguet", "Saksa", "256",
+         4, 0, "Praha", 0, 0,))
+
+EU_coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
+    game("Berlin Brandenburg Airport", "Islanti",
+         2412, EU_coin1, crime_stopped1, location_atm, km, round_nro))
+
+EU_coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
+game("Kelavik International Airport", "Italia",
+     3071, EU_coin2, crime_stopped2, location_atm1, km1, round_nro1))
+
+EU_coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
+game("Peretola Airport", "Espanja",
+     799, EU_coin3, crime_stopped3, location_atm2, km2, round_nro2))
+
+end_game(crime_stopped4, EU_coin4, km3, location_atm3)
