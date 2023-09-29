@@ -147,6 +147,22 @@ def youre_here(airport_name):
     sijainti = suoritaHaku(sql2)
     return sijainti
 
+def end_game(crime_stopped, coin, km, location_atm3 ): #kato mikä taso/manner pelattu
+
+    if location_atm3 == "Kanada" and crime_stopped4 >= 3:
+        print("Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät.\nKansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty.\nSinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka. Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!")
+        print("Olet estänyt näin", crime_stopped, "rikosta kaikista rikoksista ja sinulla on", coin,
+              "HETACOINS:ia ja olet matkustanut", km, "kilometriä.")
+    if location_atm3 != "Kanada" or crime_stopped4 < 3:
+        print("Pimeys vallitsee, kun seisot hävinneenä lentokentän varjoissa. Vaikka taistelit parhaasi mukaan, rikolliset pääsivät kerta toisensa jälkeen käsistäsi.\nKansainväliset operaatiot päättyivät katastrofeihin, ja kukaan ei ole turvassa.\nSinut on virallisesti erotettu agenttijoukosta, ja jäät pohtimaan mitä olisit voinut tehdä toisin.\nJärjestöt jatkavat rikoksiaan, ja maailma tarvitsee nyt enemmän kuin koskaan sankareita.\nSinun seikkailusi päättyi pettymykseen, mutta ehkä tulet saamaan vielä mahdollisuuden palata taisteluun…")
+        print("Olet estänyt vain", crime_stopped, "rikosta kaikista rikoksista ja sinulla on vain", coin,
+              "HETACOINS:ia ja olet matkustanut", km, "kilometriä." )
+
+def warning(coins):
+    if coins < 2:
+        print("VAROITUS, sinulla on alle 2 kolikkoa! Jos et pääse rosvon jäljille seuraavalla lentokentällä, olet vaarassa hävitä pelin.")
+    return warning(coins)
+
 
 def game(
         airport_name,
@@ -229,20 +245,11 @@ def game(
 
             distance = GD(sijainti1, sijainti2).km
 
-        # Funktion pitää palauttaa pelaajan_kilometrit, jonka voi ottaa samalla fuktion parametrilla, kun right_distance
-        # jos pelaaja vastaa väärin sitten voi mennä laskemaan tuon fuktion, niin sitä voisi nyt laittaa tuohon
-        # if lauseeseen, joka kattoo oliko pelaajan vastus oikea vai ei
-
-        # Meidän olisi myös hyvä kattoo, että monesko kierro pelissä on meneillään. Jos kierroksia on jo mennyt 4 ja
-        # pelaaja ei ole onnistunut pysättämään 3/4 rikosta niin se olisi automaattinen game over
-
-        # Pitäisi myös katttoo if lausekkeella, että meneekö coins nollaan ja se viesti mistä oli puhetta, että
-        # tulee pomolta viesti, että seuraava taso täytyy läpäistä ilman vinkkejä tai jtn sinne päin
 
     rangaistus = oikea_matka(distance, 257)
     pelaajan_kilometrit += rangaistus
 
-    # print(rangaistus)
+    warning(coins)
 
     # Ei palauta arvoa km oikein
 
