@@ -215,7 +215,7 @@ def get_first_tip(airport_name):
     sql += f" Where name = '{airport_name}'"
     tulos = suoritaHaku(sql)
     print(tulos)
-    return
+    return tulos
 
 
 def youre_here(airport_name):
@@ -253,7 +253,7 @@ def game(
 ):
     rounds_played += 1
     print("")
-    print("Whatt" + style.BLACK + f"Welcome to {airport_name}" + style.RESET)
+    print(style.BLACK + f"Welcome to {airport_name}" + style.RESET)
     print("")
 
     for x in get_first_tip(airport_name):
@@ -263,6 +263,7 @@ def game(
     print(
         f"Sinun stats KM: {pelaajan_kilometrit} HETACOINS: {coins} Rikokset pysäytetty: {crimes_stopped} Kierros: {rounds_played}")
     print("")
+
     print(
         "Saamasi tiedon mukaan sinun pitäisi päättää mihin valtioon matkustat seuraavaksi."
     )
@@ -392,7 +393,6 @@ def vanha_vai_uusi_pelaaja(user_name):
     kursori = yhteys.cursor()
     kursori.execute(sql)
     tulos = kursori.fetchone()
-    print(tulos)
 
     if tulos is not None:
         print(f"Tervetuloa takaisin {user_name}!")
@@ -433,58 +433,17 @@ if not vastaus:
 
 
         if pelaajan_taso_valinta == "1":
-            coin1, crime_stopped1, km, location_atm, round_nro = (
-                game("Václav Havel Airport Prague",
-                     "Saksa", 256,
-                     4, 0, "prague",
-                     0, 0))
-            
-            coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
-                "Berlin Brandenburg Airport",
-                "islanti",
-                256,
-                coin1,
-                crime_stopped1,
-                location_atm,
-                km,
-                round_nro,
-            )
-            
-            game(
-                "Peretola Airport",
-                "iceland",
-                3070,
-                coin2,
-                crime_stopped2,
-                location_atm1,
-                km1,
-                round_nro1,
-            )
+            if_eurooppa() #Tähän latautuu Eurooppa
+
 
         if pelaajan_taso_valinta == "2":
-            coin1, crime_stopped1, km, location_atm, round_nro = (
-    game("José Marti International Airport", "Chile", "6360",
-         4, 0, "Havanna", 0, 0,))
-
-coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
-    game("Santiago de Chile Airport", "US",
-         8969, coin1, crime_stopped1, location_atm, km, round_nro))
-
-coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
-game("McCarran International Airport", "Brasilia",
-     9975, coin2, crime_stopped2, location_atm1, km1, round_nro1))
-
-coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
-game("Galeão International Airport", "Kanada",
-     8211, coin3, crime_stopped3, location_atm2, km2, round_nro2))
-
-end_game(crime_stopped4, coin4, km3, location_atm3)
+            if_amerikka() #Tähän latautuu Amerikka
 
         if pelaajan_taso_valinta == "3":
-            game() #Tähän latautuu Aasia
+            if_aasia() #Tähän latautuu Aasia
 
         else:
-            game() #Tähän latautuu Afrikka
+            if_afrikka() #Tähän latautuu Afrikka
 
         break
 
