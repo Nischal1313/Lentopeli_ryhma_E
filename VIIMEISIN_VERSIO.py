@@ -385,7 +385,23 @@ if not vastaus:
             )
 
         if pelaajan_taso_valinta == "2":
-            game() #Tähän latautuu Amerikat taso
+            coin1, crime_stopped1, km, location_atm, round_nro = (
+    game("José Marti International Airport", "Chile", "6360",
+         4, 0, "Havanna", 0, 0,))
+
+coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
+    game("Santiago de Chile Airport", "US",
+         8969, coin1, crime_stopped1, location_atm, km, round_nro))
+
+coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
+game("McCarran International Airport", "Brasilia",
+     9975, coin2, crime_stopped2, location_atm1, km1, round_nro1))
+
+coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
+game("Galeão International Airport", "Kanada",
+     8211, coin3, crime_stopped3, location_atm2, km2, round_nro2))
+
+end_game(crime_stopped4, coin4, km3, location_atm3)
 
         if pelaajan_taso_valinta == "3":
             game() #Tähän latautuu Aasia
