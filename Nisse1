@@ -47,14 +47,14 @@ riodejaneiro_quebec = 8211
 # game("McCarran International Airport","brazil", 9975, 4, 0, "lasvegas", 0,)
 # game("Galeão International Airport","canada", 8211, 4, 0, "riodejaneiro", 0,)
 
-def oikea_matka(distance):
+def oikea_matka(distance : int):
     if eurooppa[0] > distance:
         rangaistus = (eurooppa[0] - distance) * 2
     elif distance > eurooppa[0]:
         rangaistus = (distance - eurooppa[0]) * 2
     return rangaistus
 
-def tallennus(coins, pelaajan_kilometrit, location_atm, crimes_stopped, coin_used, user_name):
+def tallennus(coins : int, pelaajan_kilometrit : int, location_atm : str, crimes_stopped : int, user_name : str):
     # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin
     sql = f"update game set coin = '{coins}', km_travelled = '{pelaajan_kilometrit}',"
     sql += f" location = '{location_atm}', crimes_stopped = '{crimes_stopped}', coin_used = '{coin_used}'"
