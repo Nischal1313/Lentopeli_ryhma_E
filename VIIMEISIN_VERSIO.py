@@ -87,8 +87,8 @@ def if_amerikka():
 
 def if_eurooppa():
     EU_coin1, crime_stopped1, km, location_atm, round_nro = (
-        game("Václav Havel Airport Praguet", "Saksa", 256,
-             4, 0, "Praha", 0, 0, ))
+        game("Václav Havel Airport Prague", "Saksa", 256,
+             4, 0, "Praha", 0, 0))
 
     EU_coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
         game("Berlin Brandenburg Airport", "Islanti",
@@ -144,6 +144,11 @@ def if_aasia():
 
     end_game(crime_stopped4, AA_coin4, km3, location_atm3)
 
+def if_country_exist(next_country):
+  sql = "select name from country "
+  sql += "where name = '" + next_country + "'"
+  tulos = suoritaHaku(sql)
+  return tulos
 
 
 class style():
@@ -214,7 +219,6 @@ def get_first_tip(airport_name):
     sql = "Select tip_1 From airport"
     sql += f" Where name = '{airport_name}'"
     tulos = suoritaHaku(sql)
-    print(tulos)
     return tulos
 
 
@@ -222,6 +226,14 @@ def youre_here(airport_name):
     sql2 = "SELECT latitude_deg, longitude_deg from airport"
     sql2 += " Where name = '{airport_name}'"
     sijainti = suoritaHaku(sql2)
+    return sijainti
+
+def youre_going(next_country):
+    sql = "select longitude_deg, latitude_deg"
+    sql += " from airport where airport.iso_country"
+    sql += " = (select iso_country from country"
+    sql += f" where country.name = '{next_country}')"
+    sijainti = suoritaHaku(sql)
     return sijainti
 
 def end_game(crime_stopped, coin, km, location_atm3 ): #kato mikä taso/manner pelattu
@@ -237,9 +249,8 @@ def end_game(crime_stopped, coin, km, location_atm3 ): #kato mikä taso/manner p
 
 def warning(coins):
     if coins < 2:
-        print("VAROITUS, sinulla on alle 2 kolikkoa! Jos et pääse rosvon jäljille seuraavalla lentokentällä, olet vaarassa hävitä pelin.")
-    return warning(coins)
-
+        return print("VAROITUS, sinulla on alle 2 kolikkoa! Jos et pääse rosvon jäljille seuraavalla lentokentällä, olet vaarassa hävitä pelin.")
+    return
 
 def game(
         airport_name,
@@ -296,7 +307,6 @@ def game(
         sijainti2 = youre_going(f"{next_country}")  # pitäisi hakea tietokannasta
 
         distance = GD(sijainti1, sijainti2).km
-        print(distance)
         if next_country != correct_country_name:
             coins -= 1
             crimes_stopped = crimes_stopped
@@ -455,3 +465,5 @@ if not vastaus:
 # AA_coin = Aasian valuutta
 # US_coin = Amerikan valuutta
 # AF_coin = Afrikan valuutta
+
+#KORJAA Tee funktio joka tarkastaa lennetyn maan lentokentän nimen ja palauttaa sen, GAME funktioon
