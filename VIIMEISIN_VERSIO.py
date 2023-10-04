@@ -259,12 +259,6 @@ def welcome_to(name):
 
 
 
-
-
-
-
-
-
 def if_country_is_real():
     while True:
         next_country = str(input("Anna valtion nimi: ")).capitalize()
@@ -311,8 +305,8 @@ def game(
     print("")
     while True:
         player_choise = str(input(
-            "Matkustan saamani tiedon perusteella [1], "
-            "Yrittäkää kerätä lisää tietoa rikollisen seuraavasta kohteesta [2]: "
+            "Matkustan saamani tiedon perusteella (1), "
+            "Yrittäkää kerätätä lisäätietoa rikollisen seuraavasta kohteesta.(2): "
         )
         )
         print("")
@@ -320,6 +314,7 @@ def game(
             break
 
     if player_choise == "1":
+        print("")
         next_country = str(input("Anna valtion nimi: ")).capitalize()
         print("")
         while True:
@@ -347,7 +342,6 @@ def game(
         warning(coins)
         stats(pelaajan_kilometrit, coins, crimes_stopped, rounds_played)
         print("")
-
         for x in get_second_tip(airport_name):
             print(style.MAGENTA + x[0] + style.RESET)
         print("")
@@ -384,10 +378,10 @@ def game(
 
 def vaikeustasojamanner():
     while True:
-        print("Haluatko pelata pelin helpolla[1] vai vaikealla[2] vaikeustasolla?")
+        print("Haluatko pelata pelin helpolla(1) vai vaikealla(2) vaikeustasolla?")
         print("")
         difficulty_level = input(
-            str("[1]: Eurooppa tai Amerikat, [2]: Aasia tai Afrikka: ")
+            str("1: Eurooppa tai Amerikat, 2: Aasia tai Afrikka: ")
         )
         print("")
         if difficulty_level == "1" or difficulty_level == "2":
@@ -395,7 +389,7 @@ def vaikeustasojamanner():
     if difficulty_level == "1":
         while True:
             easy_level = input(
-                "Valitse vaikeustason manner: Eurooppa[1] tai Amerikat[2]: "
+                "Valitse vaikeustason manner: Eurooppa(1) tai Amerikat(2): "
             )
             if easy_level == "1" or "2":
                 break
@@ -409,13 +403,13 @@ def vaikeustasojamanner():
 
     if difficulty_level == "2":
         while True:
-            easy_level = input("Valitse vaikeustason manner: Aasia[3] tai Afrikka[4]: ")
+            easy_level = input("Valitse vaikeustason manner: Aasia(3) tai Afrikka(4): ")
             if easy_level == "3" or "4":
                 break
 
         if easy_level == "3":
             print("")
-            print("Valitsit Aasian.")
+            print("Olet valinnut Aasian.")
 
         if easy_level == "4":
             print("")
@@ -472,5 +466,6 @@ if not vastaus:
             if_afrikka()
         break
 
-# :)
+
+
 
