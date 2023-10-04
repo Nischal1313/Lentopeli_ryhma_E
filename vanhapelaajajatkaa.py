@@ -2,7 +2,6 @@ from geopy.distance import geodesic as GD
 import mysql.connector
 import sys
 
-
 class style():
     BLACK = '\033[30m'
     RED = '\033[31m'
@@ -14,6 +13,7 @@ class style():
     WHITE = '\033[37m'
     UNDERLINE = '\033[4m'
     RESET = '\033[0m'
+
 
 
 def suoritaHaku(sql):
@@ -29,9 +29,9 @@ def execute_command(sql):
 
 # Eurooppa (km)
 prague_berlin = 256
-berlin_firenze = 964
-firenze_reykjavik = 3070
-reykjavik_barcelona = 2974
+berlin_reykjavik = 2412
+reykjavik_firenze = 3071
+firenze_barcelona = 799
 
 # game("Václav Havel Airport Prague","germany", 256, 4, 0, "prague", 0,0)
 # game("Berlin Brandenburg Airport","italy", 964, 4, 0, "berlin", 0,0)
@@ -43,7 +43,7 @@ lagos_capetown = 4767
 capetown_burundi = 3569
 burundi_freetown = 4899
 freetown_cairo = 5209
-# afrikka
+#afrikka
 # game("Murtala Muhammed International Airport","south_africa", 4767, 4, 0, "lagos", 0,0)
 # game("Cape Town International Airport ","bujumbura", 3569, 4, 0, "capetown", 0,0)
 # game("Bujumbura International Airport","sierra_leone", 4899, 4, 0, "burundi", 0,0)
@@ -66,12 +66,94 @@ santiogo_lasvegas = 8969
 lasvegas_riodejaneiro = 9975
 riodejaneiro_quebec = 8211
 
-
 # amerikka
 # game("José Marti International Airport", "chile", 6360, 4, 0, "havanna", 0,0)
 # game("Santiago de Chile Airport", "US", 8969, 4, 0, "santiago", 0,0)
 # game("McCarran International Airport","brazil", 9975, 4, 0, "lasvegas", 0,0)
 # game("Galeão International Airport","canada", 8211, 4, 0, "riodejaneiro", 0,0)
+
+def if_amerikka():
+    US_coin1, crime_stopped1, km, location_atm, round_nro = (
+        game("José Marti International Airport", "Chile", 6360,
+             4, 0, "Havanna", 0, 0, ))
+
+    US_coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
+        game("Santiago de Chile Airport", "US",
+             8969, US_coin1, crime_stopped1, location_atm, km, round_nro))
+
+    US_coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
+        game("McCarran International Airport", "Brasilia",
+             9975, US_coin2, crime_stopped2, location_atm1, km1, round_nro1))
+
+    US_coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
+        game("Galeão International Airport", "Kanada",
+             8211, US_coin3, crime_stopped3, location_atm2, km2, round_nro2))
+
+
+def if_eurooppa():
+    EU_coin1, crime_stopped1, km, location_atm, round_nro = (
+        game("Václav Havel Airport Prague", "Saksa", 256,
+             4, 0, "Praha", 0, 0))
+
+    EU_coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
+        game("Berlin Brandenburg Airport", "Islanti",
+             2412, EU_coin1, crime_stopped1, location_atm, km, round_nro))
+
+    EU_coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
+        game("Kelavik International Airport", "Italia",
+             3071, EU_coin2, crime_stopped2, location_atm1, km1, round_nro1))
+
+    EU_coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
+        game("Peretola Airport", "Espanja",
+             799, EU_coin3, crime_stopped3, location_atm2, km2, round_nro2))
+
+    end_game(crime_stopped4, EU_coin4, km3, location_atm3)
+
+
+def if_afrikka():
+    AF_coin1, crime_stopped1, km, location_atm, round_nro = (
+        game("Murtala Muhammed International Airport", "Etelä-Afrikka", 4767,
+             4, 0, "Nigeria", 0, 0, ))
+
+    AF_coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
+        game("Cape Town International Airport", "Burundi",
+             3569, AF_coin1, crime_stopped1, location_atm, km, round_nro))
+
+    AF_coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
+        game("Bujumbura International Airport", "Sierra Leone",
+             4899, AF_coin2, crime_stopped2, location_atm1, km1, round_nro1))
+
+    AF_coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
+        game("Lungi International Airport", "Egypti",
+             5209, AF_coin3, crime_stopped3, location_atm2, km2, round_nro2))
+
+    end_game(crime_stopped4, AF_coin4, km3, location_atm3)
+
+
+def if_aasia():
+    AA_coin1, crime_stopped1, km, location_atm, round_nro = (
+        game("Kolkata Airport", "Nepali", 639,
+             4, 0, "Intia", 0, 0, ))
+
+    AA_coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
+        game("Tribhuvan International Airport", "Qatar",
+             3365, AA_coin1, crime_stopped1, location_atm, km, round_nro))
+
+    AA_coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
+        game("Hamad International Airport", "Malesia",
+             5910, AA_coin2, crime_stopped2, location_atm1, km1, round_nro1))
+
+    AA_coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
+        game("Kuala Lumpur International Airport", "Etelä-Korea",
+             4601, AA_coin3, crime_stopped3, location_atm2, km2, round_nro2))
+
+    end_game(crime_stopped4, AA_coin4, km3, location_atm3)
+
+def if_country_exist(next_country):
+  sql = "select name from country "
+  sql += "where name = '" + next_country + "'"
+  tulos = suoritaHaku(sql)
+  return tulos
 
 
 class style():
@@ -86,7 +168,6 @@ class style():
     UNDERLINE = '\033[4m'
     RESET = '\033[0m'
 
-
 def oikea_matka(distance, oikeamatka):
     if oikeamatka > distance:
         rangaistus = (oikeamatka - distance) * 2
@@ -96,26 +177,32 @@ def oikea_matka(distance, oikeamatka):
         rangaistus = rangaistus
     return rangaistus
 
-
-def save(coins, pelaajan_kilometrit, location_atm, crimes_stopped, user_name): # continent otettu pois, lisätään jos tarvitaan
+def save(coins, pelaajan_kilometrit, location_atm, crimes_stopped, user_name, round_nro): # continent otettu pois, lisätään jos tarvitaan
     # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin.
     sql = f"update game set coin = '{coins}', km_travelled = '{pelaajan_kilometrit}',"
     sql += f" location = (select iso_country from airport where name = '{location_atm}'),"
-    sql += f" crimes_stopped = '{crimes_stopped} where screen_name = '{user_name}'"
+    sql += f" crimes_stopped = '{crimes_stopped}, round_nro = '{round_nro}' where screen_name = '{user_name}'"
     execute_command(sql)
-    return # ei vielä kutsuttu
+    return
 
-def delete_user(user_name): # poistaa pelaajan KAIKKI tiedot
+def delete_old_user(user_name): #poistaa vanhan pelaajan kaikki tiedot
     sql = f"delete from game where screen_name = '{user_name}'"
     execute_command(sql)
     return
 
-def get_old_data(user_name):
-    sql = "select coin, km_travelled, location, crimes_stopped" # continent poistettu
-    sql += f" from game where screen_name = '{user_name}'"
-    suoritaHaku(sql)
-    return #pitäisi palauttaa kaikki nämä tiedot
+def add_new_user(screen_name, airport_name): #parametreinä kaikki vastaavat pythonista, selectin jälkeiset voisi muuttaa muuttujiksi?
+    sql = "insert into game (coin, km_travelled, location, screen_name, crimes_stopped)"
+    sql += f" select 4, 0, ident, '{screen_name}', 0 from airport where name = '{airport_name}'"
+    execute_command(sql)
+    return
 
+def oldplayer_oldgame(user_name):
+    sql = "select coin, km_travelled, name, crimes_stopped, game.continent, round_nro"
+    sql += f" from game, airport where screen_name = '{user_name}' and ident = location"
+    tulos = suoritaHaku(sql)
+    print(tulos)
+    coins, pelaajan_kilometrit, location_atm, crimes_stopped, pelaajan_taso_valinta, round_nro = tulos[0]
+    return coins, pelaajan_kilometrit, location_atm, crimes_stopped, pelaajan_taso_valinta, round_nro
 
 yhteys = mysql.connector.connect(
     host="localhost",
@@ -155,8 +242,7 @@ def get_first_tip(airport_name):
     sql = "Select tip_1 From airport"
     sql += f" Where name = '{airport_name}'"
     tulos = suoritaHaku(sql)
-    print(tulos)
-    return
+    return tulos
 
 
 def youre_here(airport_name):
@@ -165,27 +251,29 @@ def youre_here(airport_name):
     sijainti = suoritaHaku(sql2)
     return sijainti
 
+def youre_going(next_country):
+    sql = "select longitude_deg, latitude_deg"
+    sql += " from airport where airport.iso_country"
+    sql += " = (select iso_country from country"
+    sql += f" where country.name = '{next_country}')"
+    sijainti = suoritaHaku(sql)
+    return sijainti
 
-def end_game(crime_stopped, coin, km, location_atm3):  # kato mikä taso/manner pelattu
+def end_game(crime_stopped, coin, km, location_atm3 ): #kato mikä taso/manner pelattu
 
     if location_atm3 == "Kanada" and crime_stopped4 >= 3:
-        print(
-            "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät.\nKansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty.\nSinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka. Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!")
+        print("Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät.\nKansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty.\nSinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka. Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!")
         print("Olet estänyt näin", crime_stopped, "rikosta kaikista rikoksista ja sinulla on", coin,
               "HETACOINS:ia ja olet matkustanut", km, "kilometriä.")
     if location_atm3 != "Kanada" or crime_stopped4 < 3:
-        print(
-            "Pimeys vallitsee, kun seisot hävinneenä lentokentän varjoissa. Vaikka taistelit parhaasi mukaan, rikolliset pääsivät kerta toisensa jälkeen käsistäsi.\nKansainväliset operaatiot päättyivät katastrofeihin, ja kukaan ei ole turvassa.\nSinut on virallisesti erotettu agenttijoukosta, ja jäät pohtimaan mitä olisit voinut tehdä toisin.\nJärjestöt jatkavat rikoksiaan, ja maailma tarvitsee nyt enemmän kuin koskaan sankareita.\nSinun seikkailusi päättyi pettymykseen, mutta ehkä tulet saamaan vielä mahdollisuuden palata taisteluun…")
+        print("Pimeys vallitsee, kun seisot hävinneenä lentokentän varjoissa. Vaikka taistelit parhaasi mukaan, rikolliset pääsivät kerta toisensa jälkeen käsistäsi.\nKansainväliset operaatiot päättyivät katastrofeihin, ja kukaan ei ole turvassa.\nSinut on virallisesti erotettu agenttijoukosta, ja jäät pohtimaan mitä olisit voinut tehdä toisin.\nJärjestöt jatkavat rikoksiaan, ja maailma tarvitsee nyt enemmän kuin koskaan sankareita.\nSinun seikkailusi päättyi pettymykseen, mutta ehkä tulet saamaan vielä mahdollisuuden palata taisteluun…")
         print("Olet estänyt vain", crime_stopped, "rikosta kaikista rikoksista ja sinulla on vain", coin,
-              "HETACOINS:ia ja olet matkustanut", km, "kilometriä.")
-
+              "HETACOINS:ia ja olet matkustanut", km, "kilometriä." )
 
 def warning(coins):
     if coins < 2:
-        print(
-            "VAROITUS, sinulla on alle 2 kolikkoa! Jos et pääse rosvon jäljille seuraavalla lentokentällä, olet vaarassa hävitä pelin.")
-    return warning(coins)
-
+        return print("VAROITUS, sinulla on alle 2 kolikkoa! Jos et pääse rosvon jäljille seuraavalla lentokentällä, olet vaarassa hävitä pelin.")
+    return
 
 def game(
         airport_name,
@@ -199,7 +287,7 @@ def game(
 ):
     rounds_played += 1
     print("")
-    print("Whatt" + style.BLACK + f"Welcome to {airport_name}" + style.RESET)
+    print(style.BLACK + f"Welcome to {airport_name}" + style.RESET)
     print("")
 
     for x in get_first_tip(airport_name):
@@ -209,6 +297,7 @@ def game(
     print(
         f"Sinun stats KM: {pelaajan_kilometrit} HETACOINS: {coins} Rikokset pysäytetty: {crimes_stopped} Kierros: {rounds_played}")
     print("")
+
     print(
         "Saamasi tiedon mukaan sinun pitäisi päättää mihin valtioon matkustat seuraavaksi."
     )
@@ -241,7 +330,6 @@ def game(
         sijainti2 = youre_going(f"{next_country}")  # pitäisi hakea tietokannasta
 
         distance = GD(sijainti1, sijainti2).km
-        print(distance)
         if next_country != correct_country_name:
             coins -= 1
             crimes_stopped = crimes_stopped
@@ -267,6 +355,7 @@ def game(
             sijainti2 = youre_going(f"{next_country}")
 
             distance = GD(sijainti1, sijainti2).km
+
 
     rangaistus = oikea_matka(distance, 257)
     pelaajan_kilometrit += rangaistus
@@ -328,27 +417,8 @@ def vaikeustasojamanner():
             print(
                 "Olet saapunut Nigeriaan, tervetuloa Murtala Muhammedin kansainväliseen lentokenttään!"
             )
-    return easy_level  # P #Palutta #
-
-
-# Paluttaa meille arvon siitä minkä tason pelaaja on valinnut.
-
-def new_or_old_game():
-    while True:
-        uusi_vanha_peli = int(input("Haluatko jatkaa vanhaa peliä (1) vai aloittaa uuden pelin (2)?: "))
-        if uusi_vanha_peli == 1:
-            get_old_data(user_name)
-            
-
-
-        elif uusi_vanha_peli == 2:
-            delete_user(user_name)
-            # jotenkin pitäisi saada uusi peli käyntiin tämän jälkeen
-            break
-
-
-
-
+    return easy_level #P #Palutta #
+ #Paluttaa meille arvon siitä minkä tason pelaaja on valinnut.
 
 
 def vanha_vai_uusi_pelaaja(user_name):
@@ -356,20 +426,31 @@ def vanha_vai_uusi_pelaaja(user_name):
     kursori = yhteys.cursor()
     kursori.execute(sql)
     tulos = kursori.fetchone()
-    print(tulos)
 
     if tulos is not None:
         print(f"Tervetuloa takaisin {user_name}!")
 
+        while True:
+            new_old_game = int(input("Haluatko jatkaa vanhaa peliä (1) vai aloittaa uuden pelin (2)?: "))
 
+            if new_old_game == 1:
+                # oldplayer_oldgame(user_name)
+                # nyt pitäisi jatkaa peliä saaduilla arvoilla
+                break
 
+            elif new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
+                delete_old_user(user_name)
+                # print("Tervetuloa " + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin")
+                # tulos = None ???
+                break
 
     else:
         print("")
         print(
             "Tervetuloa " + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin"
         )
-        return tulos
+    return tulos
+
 
 
 print("")
@@ -385,6 +466,7 @@ print("")
 
 user_name = str(input(style.RED + "Anna käyttäjätunnus: " + style.RESET))
 
+
 vastaus = vanha_vai_uusi_pelaaja(user_name)
 
 if not vastaus:
@@ -395,103 +477,48 @@ if not vastaus:
         print("")
 
         if pelaajan_taso_valinta == "1":
-            coin1, crime_stopped1, km, location_atm, round_nro = (
-                game("Václav Havel Airport Prague",
-                     "Saksa", 256,
-                     4, 0, "prague",
-                     0, 0))
+            if_eurooppa() #Tähän latautuu Eurooppa
 
-            coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
-                "Berlin Brandenburg Airport",
-                "islanti",
-                256,
-                coin1,
-                crime_stopped1,
-                location_atm,
-                km,
-                round_nro,
-            )
-
-            game(
-                "Peretola Airport",
-                "iceland",
-                3070,
-                coin2,
-                crime_stopped2,
-                location_atm1,
-                km1,
-                round_nro1,
-            )
 
         if pelaajan_taso_valinta == "2":
-            coin1, crime_stopped1, km, location_atm, round_nro = (
-                game("José Marti International Airport", "Chile", "6360",
-                     4, 0, "Havanna", 0, 0, ))
+            if_amerikka() #Tähän latautuu Amerikka
 
-coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
-    game("Santiago de Chile Airport", "US",
-         8969, coin1, crime_stopped1, location_atm, km, round_nro))
+        if pelaajan_taso_valinta == "3":
+            if_aasia() #Tähän latautuu Aasia
 
-coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
-    game("McCarran International Airport", "Brasilia",
-         9975, coin2, crime_stopped2, location_atm1, km1, round_nro1))
+        else:
+            if_afrikka() #Tähän latautuu Afrikka
 
-coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
-    game("Galeão International Airport", "Kanada",
-         8211, coin3, crime_stopped3, location_atm2, km2, round_nro2))
+        break
 
-end_game(crime_stopped4, coin4, km3, location_atm3)
+if vastaus:
 
-if pelaajan_taso_valinta == "3":
-    game()  # Tähän latautuu Aasia
+    oldplayer_oldgame(user_name) # tämän täytyisi palauttaa pelaajan_taso_valinta eli gametaulun continent oikein,
+    # jotta sitä voisi verrata alempana
 
-# else:
-#    coin1, crime_stopped1, km, location_atm, round_nro = game("Murtala Muhammed International Airport",
-#                                                              "Nigeria", 4767, 4,
-#                                                              0, "Nigeria", 0,
-#                                                              0))))  # Tähän latautuu Afrikka
+    while True:
 
-#    break
+        if pelaajan_taso_valinta == "1":
+            if_eurooppa() #Tähän latautuu Eurooppa
 
-EU_coin
-AA_coin
-US_coin
-AF_coin
+        if pelaajan_taso_valinta == "2":
+            if_amerikka() #Tähän latautuu Amerikka
 
-# Amerikka
-coin1, crime_stopped1, km, location_atm, round_nro = (
-    game("José Marti International Airport", "Chile", "6360",
-         4, 0, "Havanna", 0, 0, ))
+        if pelaajan_taso_valinta == "3":
+            if_aasia() #Tähän latautuu Aasia
 
-coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
-    game("Santiago de Chile Airport", "US",
-         8969, coin1, crime_stopped1, location_atm, km, round_nro))
+        else:
+            if_afrikka() #Tähän latautuu Afrikka
 
-coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
-    game("McCarran International Airport", "Brasilia",
-         9975, coin2, crime_stopped2, location_atm1, km1, round_nro1))
+        break
 
-coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
-    game("Galeão International Airport", "Kanada",
-         8211, coin3, crime_stopped3, location_atm2, km2, round_nro2))
+# sama juttu mutta if vastaus, pelaajan_taso_valinta pitää kait tallentaa myös tietokantaan
 
-end_game(crime_stopped4, coin4, km3, location_atm3)
 
-# Eurooppa
-coin1, crime_stopped1, km, location_atm, round_nro = (
-    game("Václav Havel Airport Prague", "Saksa", "256",
-         4, 0, "Praha", 0, 0, ))
 
-coin2, crime_stopped2, km1, location_atm1, round_nro1 = (
-    game("Berlin Brandenburg Airport", "Islanti",
-         8969, coin1, crime_stopped1, location_atm, km, round_nro))
+# EU_coin = Euroopan valuutta
+# AA_coin = Aasian valuutta
+# US_coin = Amerikan valuutta
+# AF_coin = Afrikan valuutta
 
-coin3, crime_stopped3, km2, location_atm2, round_nro2 = (
-    game("McCarran International Airport", "Brasilia",
-         9975, coin2, crime_stopped2, location_atm1, km1, round_nro1))
-
-coin4, crime_stopped4, km3, location_atm3, round_nro3 = (
-    game("Galeão International Airport", "Kanada",
-         8211, coin3, crime_stopped3, location_atm2, km2, round_nro2))
-
-end_game(crime_stopped4, coin4, km3, location_atm3)
+#KORJAA Tee funktio joka tarkastaa lennetyn maan lentokentän nimen ja palauttaa sen, GAME funktioon
