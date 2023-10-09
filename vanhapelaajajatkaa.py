@@ -72,6 +72,8 @@ riodejaneiro_quebec = 8211
 # game("McCarran International Airport","brazil", 9975, 4, 0, "lasvegas", 0,0)
 # game("Galeão International Airport","canada", 8211, 4, 0, "riodejaneiro", 0,0)
 
+# pitää saada sillei että round_nro vastaa oikeaa tietokannasta
+
 def if_amerikka():
     US_coin1, crime_stopped1, km, location_atm, round_nro = (
         game("José Marti International Airport", "Chile", 6360,
@@ -200,9 +202,41 @@ def oldplayer_oldgame(user_name):
     sql = "select coin, km_travelled, name, crimes_stopped, game.continent, round_nro"
     sql += f" from game, airport where screen_name = '{user_name}' and ident = location"
     tulos = suoritaHaku(sql)
-    print(tulos)
+    #print(tulos)
     coins, pelaajan_kilometrit, location_atm, crimes_stopped, pelaajan_taso_valinta, round_nro = tulos[0]
     return coins, pelaajan_kilometrit, location_atm, crimes_stopped, pelaajan_taso_valinta, round_nro
+
+def vanha_vai_uusi_pelaaja(user_name):
+    sql = f"Select screen_name From game where screen_name = '{user_name}'"
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    tulos = kursori.fetchone()
+
+    if tulos is not None:
+        print(f"Tervetuloa takaisin {user_name}!")
+
+        while True:
+            new_old_game = int(input("Haluatko jatkaa vanhaa peliä (1) vai aloittaa uuden pelin (2)?: "))
+
+            if new_old_game == 1:
+                oldplayer_oldgame(user_name)
+                # nyt pitäisi jatkaa peliä saaduilla arvoilla
+                break
+
+            elif new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
+                delete_old_user(user_name)
+                # print("Tervetuloa " + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin")
+                # tulos = None ???
+                break
+
+    else:
+        print("")
+        print(
+            "Tervetuloa " + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin"
+        )
+    return tulos
+
+
 
 yhteys = mysql.connector.connect(
     host="localhost",
@@ -367,7 +401,7 @@ def game(
     return coins, crimes_stopped, round(pelaajan_kilometrit), next_country, rounds_played
 
 
-def vaikeustasojamanner():
+def vaikeustasojamanner(user_name):
     while True:
         print("Haluatko pelata pelin helpolla(1) vai vaikealla(2) vaikeustasolla?")
         print("")
@@ -417,39 +451,11 @@ def vaikeustasojamanner():
             print(
                 "Olet saapunut Nigeriaan, tervetuloa Murtala Muhammedin kansainväliseen lentokenttään!"
             )
-    return easy_level #P #Palutta #
- #Paluttaa meille arvon siitä minkä tason pelaaja on valinnut.
 
+    sql = f"update game set column continent = '{easy_level}' where screen_name = '{user_name}'"
+    execute_command(sql)
+    return easy_level
 
-def vanha_vai_uusi_pelaaja(user_name):
-    sql = f"Select screen_name From game where screen_name = '{user_name}'"
-    kursori = yhteys.cursor()
-    kursori.execute(sql)
-    tulos = kursori.fetchone()
-
-    if tulos is not None:
-        print(f"Tervetuloa takaisin {user_name}!")
-
-        while True:
-            new_old_game = int(input("Haluatko jatkaa vanhaa peliä (1) vai aloittaa uuden pelin (2)?: "))
-
-            if new_old_game == 1:
-                # oldplayer_oldgame(user_name)
-                # nyt pitäisi jatkaa peliä saaduilla arvoilla
-                break
-
-            elif new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
-                delete_old_user(user_name)
-                # print("Tervetuloa " + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin")
-                # tulos = None ???
-                break
-
-    else:
-        print("")
-        print(
-            "Tervetuloa " + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin"
-        )
-    return tulos
 
 
 
@@ -472,28 +478,27 @@ vastaus = vanha_vai_uusi_pelaaja(user_name)
 if not vastaus:
     while True:
         print(" ")
-        pelaajan_taso_valinta = vaikeustasojamanner()
+        pelaajan_taso_valinta = vaikeustasojamanner(user_name)
 
         print("")
 
         if pelaajan_taso_valinta == "1":
             if_eurooppa() #Tähän latautuu Eurooppa
 
-
-        if pelaajan_taso_valinta == "2":
+        elif pelaajan_taso_valinta == "2":
             if_amerikka() #Tähän latautuu Amerikka
 
-        if pelaajan_taso_valinta == "3":
+        elif pelaajan_taso_valinta == "3":
             if_aasia() #Tähän latautuu Aasia
 
-        else:
+        elif pelaajan_taso_valinta == "4":
             if_afrikka() #Tähän latautuu Afrikka
 
         break
 
 if vastaus:
 
-    oldplayer_oldgame(user_name) # tämän täytyisi palauttaa pelaajan_taso_valinta eli gametaulun continent oikein,
+    pelaajan_taso_valinta = oldplayer_oldgame(user_name)[4] # tämän täytyisi palauttaa pelaajan_taso_valinta eli gametaulun continent oikein,
     # jotta sitä voisi verrata alempana
 
     while True:
@@ -501,18 +506,16 @@ if vastaus:
         if pelaajan_taso_valinta == "1":
             if_eurooppa() #Tähän latautuu Eurooppa
 
-        if pelaajan_taso_valinta == "2":
+        elif pelaajan_taso_valinta == "2":
             if_amerikka() #Tähän latautuu Amerikka
 
-        if pelaajan_taso_valinta == "3":
+        elif pelaajan_taso_valinta == "3":
             if_aasia() #Tähän latautuu Aasia
 
-        else:
+        elif pelaajan_taso_valinta == "4":
             if_afrikka() #Tähän latautuu Afrikka
 
         break
-
-# sama juttu mutta if vastaus, pelaajan_taso_valinta pitää kait tallentaa myös tietokantaan
 
 
 
