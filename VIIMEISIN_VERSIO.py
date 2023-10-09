@@ -5,9 +5,9 @@ import sys
 yhteys = mysql.connector.connect(
     host="localhost",
     port=3306,
-    database="karkuteilla",
+    database="karkuteilla4",
     user="root",
-    password="rotallaonvaljaat",
+    password="MVicheata01",
     autocommit=True,
 )
 
@@ -39,30 +39,41 @@ def if_africa():
         km,
         round_nro,
     )
-
-    AF_coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
-        "Bujumbura International Airport",
-        "Sierra Leone",
-        4899,
-        AF_coin2,
-        crime_stopped2,
-        location_atm1,
-        km1,
-        round_nro1,
-    )
-
-    AF_coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
-        "Lungi International Airport",
-        "Egypti",
-        5209,
-        AF_coin3,
-        crime_stopped3,
-        location_atm2,
-        km2,
-        round_nro2,
-    )
-
-    end_game(crime_stopped4, AF_coin4, km3, location_atm3, "Egypti")
+    if AF_coin2 > 0:
+        AF_coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
+            "Bujumbura International Airport",
+            "Sierra Leone",
+            4899,
+            AF_coin2,
+            crime_stopped2,
+            location_atm1,
+            km1,
+            round_nro1,
+        )
+        if AF_coin3 > 0:
+            AF_coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
+                "Lungi International Airport",
+                "Egypti",
+                5209,
+                AF_coin3,
+                crime_stopped3,
+                location_atm2,
+                km2,
+                round_nro2,
+            )
+            end_game(crime_stopped4, AF_coin4, km3, location_atm3, "Egypti")
+        else:
+                print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
+    else:
+        print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
+    print("")
+    while True:
+        print("Haluatko pelata tason uudestaan?")
+        AF_answer = str(input("KYLLÄ[1] , EN[2]: "))
+        print("")
+        if AF_answer == "1" or AF_answer == "2":
+            break
+    return AF_answer
 
 
 def if_amerikka():
@@ -87,30 +98,41 @@ def if_amerikka():
         km,
         round_nro,
     )
-
-    US_coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
-        "McCarran International Airport",
-        "Brasilia",
-        9975,
-        US_coin2,
-        crime_stopped2,
-        location_atm1,
-        km1,
-        round_nro1,
-    )
-
-    US_coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
-        "Galeão International Airport",
-        "Kanada",
-        8211,
-        US_coin3,
-        crime_stopped3,
-        location_atm2,
-        km2,
-        round_nro2,
-    )
-    end_game(crime_stopped4, US_coin4, km3, location_atm3, "Kanada")
-
+    if US_coin2 > 0:
+        US_coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
+            "McCarran International Airport",
+            "Brasilia",
+            9975,
+            US_coin2,
+            crime_stopped2,
+            location_atm1,
+            km1,
+            round_nro1,
+        )
+        if US_coin3 > 0:
+            US_coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
+                "Galeão International Airport",
+                "Kanada",
+                8211,
+                US_coin3,
+                crime_stopped3,
+                location_atm2,
+                km2,
+                round_nro2,
+            )
+            end_game(crime_stopped4, US_coin4, km3, location_atm3, "Kanada")
+        else:
+            print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
+    else:
+        print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
+    print("")
+    while True:
+        print("Haluatko pelata tason uudestaan?")
+        US_answer = str(input("KYLLÄ[1] , EN[2]: "))
+        print("")
+        if US_answer == "1" or US_answer == "2":
+            break
+    return US_answer
 
 def if_asia():
     AA_coin1, crime_stopped1, km, location_atm, round_nro = game(
@@ -134,31 +156,41 @@ def if_asia():
         km,
         round_nro,
     )
-
-    AA_coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
-        "Hamad International Airport",
-        "Malesia",
-        5910,
-        AA_coin2,
-        crime_stopped2,
-        location_atm1,
-        km1,
-        round_nro1,
-    )
-
-    AA_coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
-        "Kuala Lumpur International Airport",
-        "Etelä-Korea",
-        4601,
-        AA_coin3,
-        crime_stopped3,
-        location_atm2,
-        km2,
-        round_nro2,
-    )
-
-    end_game(crime_stopped4, AA_coin4, km3, location_atm3)
-
+    if AA_coin2 > 0:
+        AA_coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
+            "Hamad International Airport",
+            "Malesia",
+            5910,
+            AA_coin2,
+            crime_stopped2,
+            location_atm1,
+            km1,
+            round_nro1,
+        )
+        if AA_coin3 > 0:
+            AA_coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
+                "Kuala Lumpur International Airport",
+                "Etelä-Korea",
+                4601,
+                AA_coin3,
+                crime_stopped3,
+                location_atm2,
+                km2,
+                round_nro2,
+            )
+            end_game(crime_stopped4, AA_coin4, km3, location_atm3)
+        else:
+            print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
+    else:
+        print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
+    print("")
+    while True:
+        print("Haluatko pelata tason uudestaan?")
+        AA_answer = str(input("KYLLÄ[1] , EN[2]: "))
+        print("")
+        if AA_answer == "1" or AA_answer == "2":
+            break
+    return AA_answer
 
 def if_eurooppa():
     EU_coin1, crime_stopped1, km, location_atm, round_nro = game(
@@ -301,10 +333,6 @@ def execute_sql(sql):
     ans = cursor.fetchall()
     return ans
 
-def execute_command(sql):
-    kursori = yhteys.cursor()
-    kursori.execute(sql)
-    return
 
 def youre_here(airport_name):
     sql2 = "SELECT latitude_deg, longitude_deg from airport"
@@ -332,24 +360,16 @@ def oikea_matka(distance, right_distance):
     return penalty
 
 
-def save(coins, pelaajan_kilometrit, location_atm, crimes_stopped, user_name, round_nro): # continent otettu pois, lisätään jos tarvitaan
-    # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin.
-    sql = f"update game set coin = '{coins}', km_travelled = '{pelaajan_kilometrit}',"
-    sql += f" location = (select iso_country from airport where name = '{location_atm}'),"
-    sql += f" crimes_stopped = '{crimes_stopped}, round_nro = '{round_nro}' where screen_name = '{user_name}'"
-    execute_command(sql)
-    return
+def saving_game(
+    coins, player_kilometers, location_atm, crimes_stopped, coin_used, user_name
+):
+    # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin
+    sql = f"update game set coin = '{coins}',km_travelled = '{player_kilometers}',"
+    sql += f" location = '{location_atm}', crimes_stopped = '{crimes_stopped}', coin_used = '{coin_used}'"
+    sql += f" where screen_name = '{user_name}'"
+    execute_sql(sql)
+    return  # ei kai tarvii palauttaa mitään? #Tätä ei ole viellä kutsuttu.
 
-def delete_old_user(user_name): #poistaa vanhan pelaajan kaikki tiedot
-    sql = f"delete from game where screen_name = '{user_name}'"
-    execute_command(sql)
-    return
-
-def add_new_user(screen_name, airport_name): #parametreinä kaikki vastaavat pythonista, selectin jälkeiset voisi muuttaa muuttujiksi?
-    sql = "insert into game (coin, km_travelled, location, screen_name, crimes_stopped)"
-    sql += f" select 4, 0, ident, '{screen_name}', 0 from airport where name = '{airport_name}'"
-    execute_command(sql)
-    return
 
 def plane_art():
     return print(
@@ -373,6 +393,11 @@ def plane_art():
              #@@-          .@@+.
              .:+           .%@. """
     )
+def new_line_for_tip(ans):
+    chars = 165
+    for i in range(0, len(ans), chars):
+        print(style.MAGENTA + ans[i:i+chars], style.RESET)
+    return
 
 
 def get_first_tip(airport_name):
@@ -437,7 +462,7 @@ def game(
     stats(player_km, coins, crimes_stopped, rounds_played)
 
     for x in get_first_tip(airport_name):
-        print(style.MAGENTA + x[0] + style.RESET)
+        new_line_for_tip(x[0])
         print("")
     print(
         "Saamasi tiedon mukaan sinun pitäisi päättää mihin valtioon matkustat seuraavaksi."
@@ -472,7 +497,7 @@ def game(
             coins += 2
             crimes_stopped += 1
         distance1 = youre_here(f"{airport_name}")
-        distance2 = youre_going(f"{next_country}")  # pitäisi hakea tietokannasta
+        distance2 = youre_going(f"{next_country}")  #pitäisi hakea tietokannasta
 
         distance = GD(distance1, distance2).km
 
@@ -488,7 +513,7 @@ def game(
         print("")
 
         for x in get_second_tip(airport_name):
-            print(style.MAGENTA + x[0] + style.RESET)
+            new_line_for_tip(x[0])
         print("")
         next_country = str(input("Anna valtion nimi: ")).capitalize()
         print("")
@@ -572,22 +597,13 @@ def new_or_player(user_name):
         print(f"Tervetuloa takaisin {style.GREEN}{user_name}{style.RESET}!")
         # voisko tähän pompauttaa kuvan, jossa on intro ja pelin ohjeet pelaajalle?
         print("")
-        while True:
-            new_old_game = int(input("Haluatko jatkaa vanhaa peliä [1] vai aloittaa kokonaan uuden pelin [2]?: "))
-
-            if new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
-                delete_old_user(user_name)
-                print(
-                    "Tervetuloa" + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin"
-                )
-            break
     else:
         print("")
         print(
             "Tervetuloa" + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin"
         )
 
-    return
+        return ans
 
 print("")
 print("")
@@ -598,43 +614,52 @@ print("")
 user_name = str(input(style.RED + "Anna käyttäjätunnus: " + style.RESET))
 
 
-new_or_player(user_name)
+answer = new_or_player(user_name)
 
 
-while True:
-    player_lvl = difficulty_lvl()
-    if player_lvl == "1":
-        while True:
-            print("")
-            again = if_eurooppa()
-            if again == "2":  # 2 = ei
-                thanks()
-                break
-    if player_lvl == "2":
-        while True:
-            again = if_amerikka()
-            if again == "2":
-                break
-    if player_lvl == "3":
-        while True:
-            again = if_asia()
-            if again == "2":
-                break
-    if player_lvl == "4":
-        while True:
-            again = if_africa()
-            if again == "2":
-                break
-    print("")
-    print("Mitä tasoa haluat pelata seuraavaksi?")
-    print("")
+if not answer:
     while True:
-        new_lvl = str(input("PELAA TOISTA TASOA[1], TALLENNA JA LOPETA PELI [2]: "))
-        if new_lvl == "1" or new_lvl == "2":
+        player_lvl = difficulty_lvl()
+        if player_lvl == "1":
+            while True:
+                print("")
+                again = if_eurooppa()
+                if again == "2":  # 2 = ei
+                    thanks()
+                    break
+        if player_lvl == "2":
+            while True:
+                print("")
+                again = if_amerikka()
+                if again == "2":
+                    thanks()
+                    break
+        if player_lvl == "3":
+            while True:
+                print("")
+                again = if_asia()
+                if again == "2":
+                    thanks()
+                    break
+        if player_lvl == "4":
+            while True:
+                print("")
+                again = if_africa()
+                if again == "2":
+                    thanks()
+                    break
+        print("")
+        print("Mitä tasoa haluat pelata seuraavaksi?")
+        print("")
+        while True:
+            new_lvl = str(input("PELAA TOISTA TASOA[1], TALLENNA JA LOPETA PELI [2]: "))
+            if new_lvl == "1" or new_lvl == "2":
+                break
+        if new_lvl == "1":
+            continue
+        if new_lvl == "2":
+            thanks()
             break
-    if new_lvl == "1":
-        continue
-    if new_lvl == "2":
-        thanks()
-        break
-        # JA sitten tähän se tallennus funktio vai mitäs me keksittäis?
+            # JA sitten tähän se tallennus funktio vai mitäs me keksittäis?
+if answer:
+    print("BRRRRRRRR")
