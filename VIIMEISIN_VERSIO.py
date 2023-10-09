@@ -244,13 +244,15 @@ def end_game(
 
 
 def warning(coins):
-    if coins < 2:
+    if coins == 0:
         print("")
-        print(
-            style.RED + "VAROITUS, sinulla on alle 2 kolikkoa!"
-            " Jos et pääse rosvon jäljille seuraavalla lentokentällä, olet vaarassa hävitä pelin."
-            + style.RESET
-        )
+    else:
+        if 0 < coins < 2:
+            print("")
+            print(
+                style.RED + "VAROITUS, sinulla on alle 2 kolikkoa!"
+                " Jos et pääse rosvon jäljille seuraavalla lentokentällä, olet vaarassa hävitä pelin."
+                + style.RESET)
     return
 
 
