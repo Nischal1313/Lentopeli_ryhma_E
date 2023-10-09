@@ -5,9 +5,9 @@ import sys
 yhteys = mysql.connector.connect(
     host="localhost",
     port=3306,
-    database="karkuteilla_database",
+    database="karkuteilla",
     user="root",
-    password="METROPOLIA13",
+    password="rotallaonvaljaat",
     autocommit=True,
 )
 
@@ -299,6 +299,10 @@ def execute_sql(sql):
     ans = cursor.fetchall()
     return ans
 
+def execute_command(sql):
+    kursori = yhteys.cursor()
+    kursori.execute(sql)
+    return
 
 def youre_here(airport_name):
     sql2 = "SELECT latitude_deg, longitude_deg from airport"
@@ -326,16 +330,24 @@ def oikea_matka(distance, right_distance):
     return penalty
 
 
-def saving_game(
-    coins, player_kilometers, location_atm, crimes_stopped, coin_used, user_name
-):
-    # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin
-    sql = f"update game set coin = '{coins}',km_travelled = '{player_kilometers}',"
-    sql += f" location = '{location_atm}', crimes_stopped = '{crimes_stopped}', coin_used = '{coin_used}'"
-    sql += f" where screen_name = '{user_name}'"
-    execute_sql(sql)
-    return  # ei kai tarvii palauttaa mitään? #Tätä ei ole viellä kutsuttu.
+def save(coins, pelaajan_kilometrit, location_atm, crimes_stopped, user_name, round_nro): # continent otettu pois, lisätään jos tarvitaan
+    # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin.
+    sql = f"update game set coin = '{coins}', km_travelled = '{pelaajan_kilometrit}',"
+    sql += f" location = (select iso_country from airport where name = '{location_atm}'),"
+    sql += f" crimes_stopped = '{crimes_stopped}, round_nro = '{round_nro}' where screen_name = '{user_name}'"
+    execute_command(sql)
+    return
 
+def delete_old_user(user_name): #poistaa vanhan pelaajan kaikki tiedot
+    sql = f"delete from game where screen_name = '{user_name}'"
+    execute_command(sql)
+    return
+
+def add_new_user(screen_name, airport_name): #parametreinä kaikki vastaavat pythonista, selectin jälkeiset voisi muuttaa muuttujiksi?
+    sql = "insert into game (coin, km_travelled, location, screen_name, crimes_stopped)"
+    sql += f" select 4, 0, ident, '{screen_name}', 0 from airport where name = '{airport_name}'"
+    execute_command(sql)
+    return
 
 def plane_art():
     return print(
@@ -558,13 +570,22 @@ def new_or_player(user_name):
         print(f"Tervetuloa takaisin {style.GREEN}{user_name}{style.RESET}!")
         # voisko tähän pompauttaa kuvan, jossa on intro ja pelin ohjeet pelaajalle?
         print("")
+        while True:
+            new_old_game = int(input("Haluatko jatkaa vanhaa peliä [1] vai aloittaa kokonaan uuden pelin [2]?: "))
+
+            if new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
+                delete_old_user(user_name)
+                print(
+                    "Tervetuloa" + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin"
+                )
+            break
     else:
         print("")
         print(
             "Tervetuloa" + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin"
         )
 
-        return ans
+    return
 
 print("")
 print("")
@@ -575,46 +596,43 @@ print("")
 user_name = str(input(style.RED + "Anna käyttäjätunnus: " + style.RESET))
 
 
-answer = new_or_player(user_name)
+new_or_player(user_name)
 
 
-if not answer:
-    while True:
-        player_lvl = difficulty_lvl()
-        if player_lvl == "1":
-            while True:
-                print("")
-                again = if_eurooppa()
-                if again == "2":  # 2 = ei
-                    thanks()
-                    break
-        if player_lvl == "2":
-            while True:
-                again = if_amerikka()
-                if again == "2":
-                    break
-        if player_lvl == "3":
-            while True:
-                again = if_asia()
-                if again == "2":
-                    break
-        if player_lvl == "4":
-            while True:
-                again = if_africa()
-                if again == "2":
-                    break
-        print("")
-        print("Mitä tasoa haluat pelata seuraavaksi?")
-        print("")
+while True:
+    player_lvl = difficulty_lvl()
+    if player_lvl == "1":
         while True:
-            new_lvl = str(input("PELAA TOISTA TASOA[1], TALLENNA JA LOPETA PELI [2]: "))
-            if new_lvl == "1" or new_lvl == "2":
+            print("")
+            again = if_eurooppa()
+            if again == "2":  # 2 = ei
+                thanks()
                 break
-        if new_lvl == "1":
-            continue
-        if new_lvl == "2":
-            thanks()
+    if player_lvl == "2":
+        while True:
+            again = if_amerikka()
+            if again == "2":
+                break
+    if player_lvl == "3":
+        while True:
+            again = if_asia()
+            if again == "2":
+                break
+    if player_lvl == "4":
+        while True:
+            again = if_africa()
+            if again == "2":
+                break
+    print("")
+    print("Mitä tasoa haluat pelata seuraavaksi?")
+    print("")
+    while True:
+        new_lvl = str(input("PELAA TOISTA TASOA[1], TALLENNA JA LOPETA PELI [2]: "))
+        if new_lvl == "1" or new_lvl == "2":
             break
-            # JA sitten tähän se tallennus funktio vai mitäs me keksittäis?
-if answer:
-    print("BRRRRRRRR")
+    if new_lvl == "1":
+        continue
+    if new_lvl == "2":
+        thanks()
+        break
+        # JA sitten tähän se tallennus funktio vai mitäs me keksittäis?
