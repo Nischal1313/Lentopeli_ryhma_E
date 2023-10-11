@@ -377,9 +377,8 @@ def delete_old_user(user_name): #poistaa vanhan pelaajan kaikki tiedot
     execute_command(sql)
     return
 
-def add_new_user(screen_name, airport_name): #parametreinä kaikki vastaavat pythonista, selectin jälkeiset voisi muuttaa muuttujiksi?
-    sql = "insert into game (coin, km_travelled, location, screen_name, crimes_stopped)"
-    sql += f" select 4, 0, ident, '{screen_name}', 0 from airport where name = '{airport_name}'"
+def add_new_user(user_name): #parametreinä kaikki vastaavat pythonista, selectin jälkeiset voisi muuttaa muuttujiksi?
+    sql = f"insert into game (screen_name) select '{user_name}'"
     execute_command(sql)
     return
 
