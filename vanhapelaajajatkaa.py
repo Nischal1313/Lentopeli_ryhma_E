@@ -636,3 +636,10 @@ while True:
         thanks()
         break
         # JA sitten tähän se tallennus funktio vai mitäs me keksittäis?
+
+        def add_new_user(
+                screen_name):  # parametreinä kaikki vastaavat pythonista, selectin jälkeiset voisi muuttaa muuttujiksi?
+            sql = "insert into game (coin, km_travelled, location, screen_name, crimes_stopped)"
+            sql += f" select 4, 0, ident, '{screen_name}', 0 from airport where name = '{airport_name}'"
+            execute_command(sql)
+            return
