@@ -604,7 +604,7 @@ def difficulty_lvl():
 def new_or_player(user_name):
     sql = f"Select screen_name From game where screen_name = '{user_name}'"
     ans = execute_sql(sql)
-    if ans is not None:
+    if ans is None:
         print("")
         print(f"Tervetuloa takaisin {style.GREEN}{user_name}{style.RESET}!")
         # voisko tähän pompauttaa kuvan, jossa on intro ja pelin ohjeet pelaajalle?
