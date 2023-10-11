@@ -603,29 +603,7 @@ def difficulty_lvl():
 def new_or_player(user_name):
     sql = f"Select screen_name From game where screen_name = '{user_name}'"
     ans = execute_sql(sql)
-    if ans is None:
-        print("")
-        print(f"Tervetuloa takaisin {style.GREEN}{user_name}{style.RESET}!")
-        # voisko tähän pompauttaa kuvan, jossa on intro ja pelin ohjeet pelaajalle?
-        print("")
-        while True:
-            new_old_game = int(input("Haluatko jatkaa vanhaa peliä [1] vai aloittaa kokonaan uuden pelin [2]?: "))
-
-            if new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
-                delete_old_user(user_name)
-                print(
-                    "Tervetuloa" + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin"
-                )
-                add_new_user(user_name)
-            break
-    else:
-        print("")
-        print(
-            "Tervetuloa" + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin"
-        )
-        add_new_user(user_name)
-
-    return
+    return ans
 
 print("")
 print("")
@@ -635,8 +613,30 @@ plane_art()
 print("")
 user_name = str(input(style.RED + "Anna käyttäjätunnus: " + style.RESET))
 
+if new_or_player(user_name):
+    print("")
+    print(f"Tervetuloa takaisin {style.GREEN}{user_name}{style.RESET}!")
+    # voisko tähän pompauttaa kuvan, jossa on intro ja pelin ohjeet pelaajalle?
+    print("")
+    while True:
+        new_old_game = int(input("Haluatko jatkaa vanhaa peliä [1] vai aloittaa kokonaan uuden pelin [2]?: "))
 
-answer = new_or_player(user_name)
+        if new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
+            delete_old_user(user_name)
+            print(
+                "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin"
+            )
+            add_new_user(user_name)
+        break
+if not new_or_player(user_name):
+    print("")
+    print(
+        "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin"
+    )
+    add_new_user(user_name)
+
+
+# answer = new_or_player(user_name)
 
 
 new_or_player(user_name)
