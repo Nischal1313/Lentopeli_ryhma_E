@@ -252,11 +252,26 @@ def if_eurooppa():
 
 
 def end_game(
-    crime_stopped4, coin, km, location_atm3, correct_country_name
-):  # kato mikä taso/manner pelattu
-    if location_atm3 == correct_country_name and 3 <= crime_stopped4 <=4:
+    crime_stopped4, coin, km, location_atm3, correct_country_name, continent_km
+):
+    if (
+        location_atm3 == correct_country_name
+        and 3 <= crime_stopped4 <= 4
+        and km / continent_km < 1.30
+        and coin <= 9
+    ):
         print(
-            "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät.\nKansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty.\nSinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka.\nOlet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
+            style.BLUE
+            + "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät."
+        )
+        print(
+            "Kansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty."
+        )
+        print(
+            "Sinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka."
+        )
+        print(
+            "Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
         )
         print(
             "Olet estänyt näin",
@@ -266,12 +281,55 @@ def end_game(
             "HETACOINS:ia ja olet matkustanut",
             km,
             "kilometriä.",
+            style.RESET,
         )
-    if location_atm3 != correct_country_name or crime_stopped4 < 3:
+    if (
+        location_atm3 == correct_country_name
+        and 3 <= crime_stopped4 <= 4
+        and km / continent_km < 1.30
+        and coin > 9
+    ):
         print(
-            style.RED
-            + "Pimeys vallitsee, kun seisot hävinneenä lentokentän varjoissa. \nVaikka taistelit parhaasi mukaan, rikolliset pääsivät kerta toisensa jälkeen käsistäsi.\nKansainväliset operaatiot päättyivät katastrofeihin, ja kukaan ei ole turvassa.\nSinut on virallisesti erotettu agenttijoukosta, ja jäät pohtimaan mitä olisit voinut tehdä toisin.\nJärjestöt jatkavat rikoksiaan, ja maailma tarvitsee nyt enemmän kuin koskaan sankareita.\nSinun seikkailusi päättyi pettymykseen, mutta ehkä tulet saamaan vielä mahdollisuuden palata taisteluun…"
+            style.BLUE
+            + "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät."
         )
+        print(
+            "Kansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty."
+        )
+        print(
+            "Sinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka."
+        )
+        print(
+            "Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
+        )
+    print(
+        f"Olet estänyt näin{crime_stopped4} rikosta kaikista rikoksista ja sinulla on loistava määrä"
+        f"HETACOINS:ia {coin} ja olet matkustanut {km} kilometriä." + style.RESET
+    )
+    if (
+        location_atm3 != correct_country_name
+        or crime_stopped4 < 3
+        or km / continent_km < 1.30
+    ):
+        print(
+            style.RED + "Pimeys vallitsee, kun seisot hävinneenä lentokentän varjoissa."
+        )
+        print(
+            "Vaikka taistelit parhaasi mukaan, rikolliset pääsivät kerta toisensa jälkeen käsistäsi."
+        )
+        print(
+            "Kansainväliset operaatiot päättyivät katastrofeihin, ja kukaan ei ole turvassa."
+        )
+        print(
+            "Sinut on virallisesti erotettu agenttijoukosta, ja jäät pohtimaan mitä olisit voinut tehdä toisin."
+        )
+        print(
+            "Järjestöt jatkavat rikoksiaan, ja maailma tarvitsee nyt enemmän kuin koskaan sankareita."
+        )
+        print(
+            "Sinun seikkailusi päättyi pettymykseen, mutta ehkä tulet saamaan vielä mahdollisuuden palata taisteluun…"
+        )
+
         print(
             "Olet estänyt vain",
             crime_stopped4,
@@ -411,7 +469,7 @@ def add_new_user(user_name): #parametreinä kaikki vastaavat pythonista, selecti
     return
 
 def plane_art():
-    return print(
+    return print(style.CYAN +
         """
       ``+*:.
       =@@@@#.
@@ -431,7 +489,8 @@ def plane_art():
              +@@#          .@@@--@@.
              #@@-          .@@+.
              .:+           .%@. """
-    )
+    + style.RESET)
+
 def new_line_for_tip(ans):
     chars = 165
     for i in range(0, len(ans), chars):
