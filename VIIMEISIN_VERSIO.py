@@ -246,7 +246,7 @@ def if_eurooppa():
 def end_game(
     crime_stopped4, coin, km, location_atm3, correct_country_name
 ):  # kato mikä taso/manner pelattu
-    if location_atm3 == correct_country_name and crime_stopped4 >= 3:
+    if location_atm3 == correct_country_name and 3 <= crime_stopped4 <=4:
         print(
             "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät.\nKansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty.\nSinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka.\nOlet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
         )
