@@ -282,12 +282,13 @@ def end_game(
             "kilometriä." + style.RESET,
         )
 
-def compare(crime_stopped4, km3, coin4, user_name): # TÄMÄ EI TOIMI LAITA TOIMIMAAN
+def compare(crime_stopped4, km3, coin4, user_name): # korjaa silleen että päivittää kaikki tiedot ja korjaa sql lauseet
     sql = "select crimes_stopped, km_travelled, coin"
     sql += f" from game where screen_name = '{user_name}'"
     values = execute_sql(sql)[0]
     if crime_stopped4 > values[0]:
-        sql = "update game set crimes_stopped = {crime_stopped4} where screen_name = '{user_name}'"
+        sql = ("update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
+        sql += f"where screen_name = '{user_name}'"
         execute_command(sql)
     elif crime_stopped4 == values[0]:
         if not values[1]:
@@ -296,10 +297,10 @@ def compare(crime_stopped4, km3, coin4, user_name): # TÄMÄ EI TOIMI LAITA TOIM
         if km3 < values[1]:
             sql = "update game set km_travelled = {km3} where screen_name = '{user_name}'"
             execute_command(sql)
-            elif km3 == values[1]:
-                if coin4 > values[2]:
-                    sql = "update game set coin = {coin4} where screen_name = '{user_name}'"
-                    execute_command(sql)
+        elif km3 == values[1]:
+            if coin4 > values[2]:
+                sql = "update game set coin = {coin4} where screen_name = '{user_name}'"
+                execute_command(sql)
     return
 
 def warning(coins):
@@ -404,8 +405,8 @@ def delete_old_user(user_name): #poistaa vanhan pelaajan kaikki tiedot
     return
 
 def add_new_user(user_name): #parametreinä kaikki vastaavat pythonista, selectin jälkeiset voisi muuttaa muuttujiksi?
-    sql = f"insert into game (coin, km_travelled, screen_name, crimes_stopped)"
-    sql += f" values (0, null, '{screen_name}, 0)"
+    sql = f"insert into game (coin, screen_name, crimes_stopped)"
+    sql += f" values (0, '{user_name}', 0)"
     execute_command(sql)
     return
 
