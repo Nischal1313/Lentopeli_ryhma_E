@@ -64,8 +64,32 @@ def if_africa():
             end_game(crime_stopped4, coin4, km3, location_atm3, "Egypti", 18444)
             compare_save(crime_stopped4, km3, coin4, user_name)
         else:
+                print(
+                style.RED
+                + """
+                 ______                        ____                 
+                / ____/___ _____ ___  ___     / __ \_   _____  _____
+               / / __/ __ `/ __ `__ \/ _ \   / / / / | / / _ \/ ___/
+              / /_/ / /_/ / / / / / /  __/  / /_/ /| |/ /  __/ /    
+              \____/\__,_/_/ /_/ /_/\___/   \____/ |___/\___/_/     
+      
+              """
+                + style.RESET
+            )
                 print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     else:
+        print(
+            style.RED
+            + """
+             ______                        ____                 
+            / ____/___ _____ ___  ___     / __ \_   _____  _____
+           / / __/ __ `/ __ `__ \/ _ \   / / / / | / / _ \/ ___/
+          / /_/ / /_/ / / / / / /  __/  / /_/ /| |/ /  __/ /    
+          \____/\__,_/_/ /_/ /_/\___/   \____/ |___/\___/_/     
+  
+          """
+            + style.RESET
+        )
         print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     print("")
     while True:
@@ -729,6 +753,7 @@ if new_or_player(user_name):
 
         if new_old_game == 2:  # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
             delete_old_user(user_name)
+            print()
             print(
                 "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET,
                 "uuteen peliin\n",
