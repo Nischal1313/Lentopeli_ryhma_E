@@ -7,7 +7,7 @@ yhteys = mysql.connector.connect(
     port=3306,
     database="karkuteilla",
     user="root",
-    password="rotallaonvaljaat",
+    password="maailmanilmaa",
     autocommit=True,
 )
 
