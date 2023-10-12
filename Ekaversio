@@ -5,9 +5,9 @@ import mysql.connector
 yhteys = mysql.connector.connect(
     host="localhost",
     port=3306,
-    database="karkuteilla",
+    database="karkuteilla5",
     user="root",
-    password="rotallaonvaljaat",
+    password="MVicheata01",
     autocommit=True,
 )
 
@@ -417,6 +417,7 @@ def show_scores():
         if stats == "1" or stats == "2":
             break
     if stats == "1":
+        print()
         selected_cont = str(
             input(
                 "Valitse manner: Eurooppa [1], Amerikat [2], Aasia [3], Afrikka [4] tai lopeta [5]"
@@ -870,6 +871,7 @@ if new_or_player(user_name):
             input(
                 "Jatka peliä vanhoilla tiedoilla [1] vai nollaa vanhat tiedot ja aloita kokonaan uusi peli [2]?: "
             )
+
         )
         if new_old_game == "1" or new_old_game == "2":
             break
@@ -883,6 +885,7 @@ if new_or_player(user_name):
             "uuteen peliin\n",
         )
         while True:
+            print()
             instructions = input(
                 "Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2]: "
             )
