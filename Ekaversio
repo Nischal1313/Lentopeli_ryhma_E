@@ -409,28 +409,27 @@ def warning(coins):
 
 def show_scores():
     while True:
-        stats = int(
+        stats = str(
             input(
                 "Haluatko tarkistaa parhaat pelituloksesi? Valitse kyllä [1] tai ei [2]: "
             )
         )
-        if stats == 1:
+        if stats == "1" or stats == "2":
+            break
+    if stats == "1":
+        selected_cont = str(
+            input(
+                "Valitse manner: Eurooppa [1], Amerikat [2], Aasia [3], Afrikka [4] tai lopeta [5]"
+            )
+        )
+        while selected_cont != "5":
+            print()
+            best_score(user_name, selected_cont)
             selected_cont = str(
                 input(
-                    "Valitse manner: Eurooppa [1], Amerikat [2], Aasia [3], Afrikka [4] tai lopeta [5]"
+                    "Valitse manner: Eurooppa [1], Amerikat [2], Aasia [3], Afrikka [4] tai lopeta [5]: "
                 )
             )
-            while selected_cont != "5":
-                print()
-                best_score(user_name, selected_cont)
-                selected_cont = str(
-                    input(
-                        "Valitse manner: Eurooppa [1], Amerikat [2], Aasia [3], Afrikka [4] tai lopeta [5]: "
-                    )
-                )
-            break
-        elif stats == 2:
-            break
     return
 
 
@@ -891,7 +890,7 @@ if new_or_player(user_name):
                 break
         if instructions == "1":
             game_instructions()
-            
+
 if not new_or_player(user_name):
     print("")
     print("Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin\n")
