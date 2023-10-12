@@ -711,7 +711,10 @@ if new_or_player(user_name):
             print(
                 "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin\n"
             )
-            instructions = input("Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2].")
+            while True:
+                instructions = input("Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2]: ")
+                if instructions == "1" or instructions == "2":
+                    break
             if instructions == "1":
                 game_instructions()
             add_new_user(user_name)
@@ -721,7 +724,10 @@ if not new_or_player(user_name):
     print(
         "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin\n"
     )
-    instructions = input("Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2].")
+    while True:
+        instructions = input("Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2]: ")
+        if instructions == "1" or instructions == "2":
+            break
     if instructions == "1":
         game_instructions()
     add_new_user(user_name)
