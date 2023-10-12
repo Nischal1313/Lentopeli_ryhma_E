@@ -5,9 +5,9 @@ import sys
 yhteys = mysql.connector.connect(
     host="localhost",
     port=3306,
-    database="karkuteilla5",
+    database="karkuteilla",
     user="root",
-    password="MVicheata01",
+    password="rotallaonvaljaat",
     autocommit=True,
 )
 
@@ -337,24 +337,18 @@ def compare_save(crime_stopped4, km3, coin4, user_name): # korjaa silleen että 
     sql = "select crimes_stopped, km_travelled, coin"
     sql += f" from game where screen_name = '{user_name}'"
     values = execute_sql(sql)[0]
+    sql_update = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
+    sql_update += f"where screen_name = '{user_name}'"
     if not values[1]:
-        sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
-        sql += f"where screen_name = '{user_name}'"
-        execute_command(sql)
+        execute_command(sql_update)
     elif crime_stopped4 > values[0]:
-        sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
-        sql += f"where screen_name = '{user_name}'"
-        execute_command(sql)
+        execute_command(sql_update)
     elif crime_stopped4 == values[0]:
         if km3 < values[1]:
-            sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
-            sql += f"where screen_name = '{user_name}'"
-            execute_command(sql)
+            execute_command(sql_update)
         elif km3 == values[1]:
             if coin4 > values[2]:
-                sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
-                sql += f"where screen_name = '{user_name}'"
-                execute_command(sql)
+                execute_command(sql_update)
     return
 
 def warning(coins):
@@ -367,6 +361,19 @@ def warning(coins):
                 style.RED + "VAROITUS, sinulla on alle 2 kolikkoa!"
                 " Jos et pääse rosvon jäljille seuraavalla lentokentällä, olet vaarassa hävitä pelin."
                 + style.RESET)
+    return
+
+
+def best_score(user_name):
+    sql = "select crimes_stopped, km_travelled, coin"
+    sql += f" from game where screen_name = '{user_name}'"
+    values = execute_sql(sql)[0]
+    print("Parhaat pelituloksesi ovat:")
+    print()
+    print(f"{'Rikoksia pysäytetty:':<30s}{values[0]:<20d}")
+    print(f"{'Kilometrejä lennetty:':<30s}{values[1]:<20d}")
+    print(f"{'Kolikoita pelin lopussa:':<30s}{values[2]:<20d}")
+    print()
     return
 
 
