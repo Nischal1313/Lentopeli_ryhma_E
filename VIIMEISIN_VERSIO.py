@@ -18,7 +18,7 @@ def thanks():
 
 
 def if_africa():
-    AF_coin1, crime_stopped1, km, location_atm, round_nro = game(
+    coin1, crime_stopped1, km, location_atm, round_nro = game(
         "Murtala Muhammed International Airport",
         "Etelä-Afrikka",
         4767,
@@ -29,39 +29,40 @@ def if_africa():
         0,
     )
 
-    AF_coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
+    coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
         "Cape Town International Airport",
         "Burundi",
         3569,
-        AF_coin1,
+        coin1,
         crime_stopped1,
         location_atm,
         km,
         round_nro,
     )
-    if AF_coin2 > 0:
-        AF_coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
+    if coin2 > 0:
+        coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
             "Bujumbura International Airport",
             "Sierra Leone",
             4899,
-            AF_coin2,
+            coin2,
             crime_stopped2,
             location_atm1,
             km1,
             round_nro1,
         )
-        if AF_coin3 > 0:
-            AF_coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
+        if coin3 > 0:
+            coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
                 "Lungi International Airport",
                 "Egypti",
                 5209,
-                AF_coin3,
+                coin3,
                 crime_stopped3,
                 location_atm2,
                 km2,
                 round_nro2,
             )
-            end_game(crime_stopped4, AF_coin4, km3, location_atm3, "Egypti")
+            end_game(crime_stopped4, coin4, km3, location_atm3, "Egypti", 18444)
+            compare_save(crime_stopped4, km3, coin4, user_name)
         else:
                 print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     else:
@@ -77,7 +78,7 @@ def if_africa():
 
 
 def if_amerikka():
-    US_coin1, crime_stopped1, km, location_atm, round_nro = game(
+    coin1, crime_stopped1, km, location_atm, round_nro = game(
         "José Marti International Airport",
         "Chile",
         6360,
@@ -88,7 +89,7 @@ def if_amerikka():
         0,
     )
 
-    US_coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
+    coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
         "Santiago de Chile Airport",
         "US",
         8969,
@@ -98,8 +99,8 @@ def if_amerikka():
         km,
         round_nro,
     )
-    if US_coin2 > 0:
-        US_coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
+    if coin2 > 0:
+        coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
             "McCarran International Airport",
             "Brasilia",
             9975,
@@ -109,18 +110,19 @@ def if_amerikka():
             km1,
             round_nro1,
         )
-        if US_coin3 > 0:
-            US_coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
+        if coin3 > 0:
+            coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
                 "Galeão International Airport",
                 "Kanada",
                 8211,
-                US_coin3,
+                us_coin3,
                 crime_stopped3,
                 location_atm2,
                 km2,
                 round_nro2,
             )
-            end_game(crime_stopped4, US_coin4, km3, location_atm3, "Kanada")
+            end_game(crime_stopped4, coin4, km3, location_atm3, "Kanada", 33515)
+            compare_save(crime_stopped4, km3, coin4, user_name)
         else:
             print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     else:
@@ -135,7 +137,7 @@ def if_amerikka():
     return US_answer
 
 def if_asia():
-    AA_coin1, crime_stopped1, km, location_atm, round_nro = game(
+    coin1, crime_stopped1, km, location_atm, round_nro = game(
         "Kolkata Airport",
         "Nepali",
         639,
@@ -146,39 +148,40 @@ def if_asia():
         0,
     )
 
-    AA_coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
+    coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
         "Tribhuvan International Airport",
         "Qatar",
         3365,
-        AA_coin1,
+        coin1,
         crime_stopped1,
         location_atm,
         km,
         round_nro,
     )
-    if AA_coin2 > 0:
-        AA_coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
+    if coin2 > 0:
+        coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
             "Hamad International Airport",
             "Malesia",
             5910,
-            AA_coin2,
+            coin2,
             crime_stopped2,
             location_atm1,
             km1,
             round_nro1,
         )
-        if AA_coin3 > 0:
-            AA_coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
+        if coin3 > 0:
+            coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
                 "Kuala Lumpur International Airport",
                 "Etelä-Korea",
                 4601,
-                AA_coin3,
+                coin3,
                 crime_stopped3,
                 location_atm2,
                 km2,
                 round_nro2,
             )
-            end_game(crime_stopped4, AA_coin4, km3, location_atm3)
+            end_game(crime_stopped4, coin4, km3, location_atm3, 14515) # correct country name puuttuu??
+            compare_save(crime_stopped4, km3, coin4, user_name)
         else:
             print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     else:
@@ -193,42 +196,43 @@ def if_asia():
     return AA_answer
 
 def if_eurooppa():
-    EU_coin1, crime_stopped1, km, location_atm, round_nro = game(
+    coin1, crime_stopped1, km, location_atm, round_nro = game(
         "Václav Havel Airport Prague", "Saksa", 256, 4, 0, "Praha", 0, 0
     )
-    EU_coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
+    coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
         "Berlin Brandenburg Airport",
         "Islanti",
         2412,
-        EU_coin1,
+        coin1,
         crime_stopped1,
         location_atm,
         km,
         round_nro,
     )
-    if EU_coin2 > 0:
-        EU_coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
+    if coin2 > 0:
+        coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
             "Keflavik International Airport",
             "Italia",
             3071,
-            EU_coin2,
+            coin2,
             crime_stopped2,
             location_atm1,
             km1,
             round_nro1,
         )
-        if EU_coin3 > 0:
-            EU_coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
+        if coin3 > 0:
+            coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
                 "Peretola Airport",
                 "Espanja",
                 799,
-                EU_coin3,
+                coin3,
                 crime_stopped3,
                 location_atm2,
                 km2,
                 round_nro2,
             )
-            end_game(crime_stopped4, EU_coin4, km3, location_atm3, "Espanja")
+            end_game(crime_stopped4, coin4, km3, location_atm3, "Espanja", 6539)
+            compare_save(crime_stopped4, km3, coin4, user_name)
         else:
             print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     else:
@@ -244,26 +248,32 @@ def if_eurooppa():
 
 
 def end_game(
-    crime_stopped4, coin, km, location_atm3, correct_country_name
-):  # kato mikä taso/manner pelattu
-    if location_atm3 == correct_country_name and 3 <= crime_stopped4 <=4:
+    crime_stopped4, coin, km, location_atm3, correct_country_name, continent_km
+):
+    if (
+        location_atm3 != correct_country_name
+        or crime_stopped4 < 3
+        or km / continent_km > 1.30
+    ):
         print(
-            "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät.\nKansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty.\nSinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka.\nOlet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
+            style.RED + "Pimeys vallitsee, kun seisot hävinneenä lentokentän varjoissa."
         )
         print(
-            "Olet estänyt näin",
-            crime_stopped4,
-            "rikosta kaikista rikoksista ja sinulla on",
-            coin,
-            "HETACOINS:ia ja olet matkustanut",
-            km,
-            "kilometriä.",
+            "Vaikka taistelit parhaasi mukaan, rikolliset pääsivät kerta toisensa jälkeen käsistäsi."
         )
-    if location_atm3 != correct_country_name or crime_stopped4 < 3:
         print(
-            style.RED
-            + "Pimeys vallitsee, kun seisot hävinneenä lentokentän varjoissa. \nVaikka taistelit parhaasi mukaan, rikolliset pääsivät kerta toisensa jälkeen käsistäsi.\nKansainväliset operaatiot päättyivät katastrofeihin, ja kukaan ei ole turvassa.\nSinut on virallisesti erotettu agenttijoukosta, ja jäät pohtimaan mitä olisit voinut tehdä toisin.\nJärjestöt jatkavat rikoksiaan, ja maailma tarvitsee nyt enemmän kuin koskaan sankareita.\nSinun seikkailusi päättyi pettymykseen, mutta ehkä tulet saamaan vielä mahdollisuuden palata taisteluun…"
+            "Kansainväliset operaatiot päättyivät katastrofeihin, ja kukaan ei ole turvassa."
         )
+        print(
+            "Sinut on virallisesti erotettu agenttijoukosta, ja jäät pohtimaan mitä olisit voinut tehdä toisin."
+        )
+        print(
+            "Järjestöt jatkavat rikoksiaan, ja maailma tarvitsee nyt enemmän kuin koskaan sankareita."
+        )
+        print(
+            "Sinun seikkailusi päättyi pettymykseen, mutta ehkä tulet saamaan vielä mahdollisuuden palata taisteluun…"
+        )
+
         print(
             "Olet estänyt vain",
             crime_stopped4,
@@ -273,7 +283,82 @@ def end_game(
             km,
             "kilometriä." + style.RESET,
         )
+    if (
+        location_atm3 == correct_country_name
+        and 3 <= crime_stopped4
+        and km / continent_km < 1.30
+        and coin <= 9
+    ):
+        print(
+            style.BLUE
+            + "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät."
+        )
+        print(
+            "Kansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty."
+        )
+        print(
+            "Sinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka."
+        )
+        print(
+            "Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
+        )
+        print(
+            "Olet estänyt näin",
+            crime_stopped4,
+            "rikosta kaikista rikoksista ja sinulla on",
+            coin,
+            "HETACOINS:ia ja olet matkustanut",
+            km,
+            "kilometriä.",
+            style.RESET,
+        )
+    if (
+        location_atm3 == correct_country_name
+        and 3 <= crime_stopped4
+        and km / continent_km < 1.30
+        and coin > 9
+    ):
+        print(
+            style.BLUE
+            + "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät."
+        )
+        print(
+            "Kansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty."
+        )
+        print(
+            "Sinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka."
+        )
+        print(
+            "Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
+        )
+    print(
+        f"Olet estänyt näin{crime_stopped4} rikosta kaikista rikoksista ja sinulla on loistava määrä"
+        f"HETACOINS:ia {coin} ja olet matkustanut {km} kilometriä." + style.RESET
+    )
 
+def compare_save(crime_stopped4, km3, coin4, user_name): # korjaa silleen että päivittää kaikki tiedot ja korjaa sql lauseet
+    sql = "select crimes_stopped, km_travelled, coin"
+    sql += f" from game where screen_name = '{user_name}'"
+    values = execute_sql(sql)[0]
+    if not values[1]:
+        sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
+        sql += f"where screen_name = '{user_name}'"
+        execute_command(sql)
+    elif crime_stopped4 > values[0]:
+        sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
+        sql += f"where screen_name = '{user_name}'"
+        execute_command(sql)
+    elif crime_stopped4 == values[0]:
+        if km3 < values[1]:
+            sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
+            sql += f"where screen_name = '{user_name}'"
+            execute_command(sql)
+        elif km3 == values[1]:
+            if coin4 > values[2]:
+                sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
+                sql += f"where screen_name = '{user_name}'"
+                execute_command(sql)
+    return
 
 def warning(coins):
     if coins == 0:
@@ -346,7 +431,7 @@ def youre_here(airport_name):
 
 
 def youre_going(next_country):
-    sql = "select longitude_deg, latitude_deg"
+    sql = "select latitude_deg, longitude_deg"
     sql += " from airport where airport.iso_country"
     sql += " = (select iso_country from country"
     sql += f" where country.name = '{next_country}')"
@@ -363,28 +448,19 @@ def oikea_matka(distance, right_distance):
         penalty = right_distance
     return penalty
 
-
-def save(coins, kilometres, location_atm, crimes_stopped, user_name): # continent otettu pois, lisätään jos tarvitaan
-    # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin.
-    sql = f"update game set coin = '{coins}', km_travelled = '{kilometres}',"
-    sql += f" location = (select iso_country from airport where name = '{location_atm}'),"
-    sql += f" crimes_stopped = '{crimes_stopped}' where screen_name = '{user_name}'"
-    execute_command(sql)
-    return
-
 def delete_old_user(user_name): #poistaa vanhan pelaajan kaikki tiedot
     sql = f"delete from game where screen_name = '{user_name}'"
     execute_command(sql)
     return
 
-def add_new_user(screen_name, airport_name): #parametreinä kaikki vastaavat pythonista, selectin jälkeiset voisi muuttaa muuttujiksi?
-    sql = "insert into game (coin, km_travelled, location, screen_name, crimes_stopped)"
-    sql += f" select 4, 0, ident, '{screen_name}', 0 from airport where name = '{airport_name}'"
+def add_new_user(user_name): #parametreinä kaikki vastaavat pythonista, selectin jälkeiset voisi muuttaa muuttujiksi?
+    sql = f"insert into game (coin, screen_name, crimes_stopped)"
+    sql += f" values (0, '{user_name}', 0)"
     execute_command(sql)
     return
 
 def plane_art():
-    return print(
+    return print(style.CYAN +
         """
       ``+*:.
       =@@@@#.
@@ -404,7 +480,8 @@ def plane_art():
              +@@#          .@@@--@@.
              #@@-          .@@+.
              .:+           .%@. """
-    )
+    + style.RESET)
+
 def new_line_for_tip(ans):
     chars = 165
     for i in range(0, len(ans), chars):
@@ -604,29 +681,7 @@ def difficulty_lvl():
 def new_or_player(user_name):
     sql = f"Select screen_name From game where screen_name = '{user_name}'"
     ans = execute_sql(sql)
-    if ans is None:
-        print("")
-        print(f"Tervetuloa takaisin {style.GREEN}{user_name}{style.RESET}!")
-        # voisko tähän pompauttaa kuvan, jossa on intro ja pelin ohjeet pelaajalle?
-        print("")
-        while True:
-            new_old_game = int(input("Haluatko jatkaa vanhaa peliä [1] vai aloittaa kokonaan uuden pelin [2]?: "))
-
-            if new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
-                delete_old_user(user_name)
-                print(
-                    "Tervetuloa" + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin"
-                )
-                add_new_user(user_name)
-            break
-    else:
-        print("")
-        print(
-            "Tervetuloa" + style.GREEN + f"{user_name}" + style.RESET, "uuteen peliin"
-        )
-        add_new_user(user_name)
-
-    return
+    return ans
 
 print("")
 print("")
@@ -636,8 +691,30 @@ plane_art()
 print("")
 user_name = str(input(style.RED + "Anna käyttäjätunnus: " + style.RESET))
 
+if new_or_player(user_name):
+    print("")
+    print(f"Tervetuloa takaisin {style.GREEN}{user_name}{style.RESET}!")
+    # voisko tähän pompauttaa kuvan, jossa on intro ja pelin ohjeet pelaajalle?
+    print("")
+    while True:
+        new_old_game = int(input("Haluatko jatkaa vanhaa peliä [1] vai aloittaa kokonaan uuden pelin [2]?: "))
 
-answer = new_or_player(user_name)
+        if new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
+            delete_old_user(user_name)
+            print(
+                "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin"
+            )
+            add_new_user(user_name)
+        break
+if not new_or_player(user_name):
+    print("")
+    print(
+        "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin"
+    )
+    add_new_user(user_name)
+
+
+# answer = new_or_player(user_name)
 
 
 new_or_player(user_name)
