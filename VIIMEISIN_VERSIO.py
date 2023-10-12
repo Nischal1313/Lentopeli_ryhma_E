@@ -7,7 +7,7 @@ yhteys = mysql.connector.connect(
     port=3306,
     database="karkuteilla",
     user="root",
-    password="maailmanilmaa",
+    password="rotallaonvaljaat",
     autocommit=True,
 )
 
@@ -388,17 +388,37 @@ def warning(coins):
                 + style.RESET)
     return
 
+def show_scores():
+    while True:
+        stats = int(input("Haluatko tarkistaa parhaat pelituloksesi? Valitse kyllä [1] tai ei [2]: "))
+        if stats == 1:
+            selected_cont = str(
+            input("Valitse manner: Eurooppa [1], Amerikat [2], Aasia [3], Afrikka [4] tai lopeta [5]"))
+            while selected_cont != "5":
+                print()
+                best_score(user_name, selected_cont)
+                selected_cont = str(
+                input("Valitse manner: Eurooppa [1], Amerikat [2], Aasia [3], Afrikka [4] tai lopeta [5]: "))
+            break
+        elif stats == 2:
+            break
+    return
 
-def best_score(user_name):
+def best_score(user_name, selected_cont):
     sql = "select crimes_stopped, km_travelled, coin"
-    sql += f" from game where screen_name = '{user_name}'"
-    values = execute_sql(sql)[0]
-    print("Parhaat pelituloksesi ovat:")
-    print()
-    print(f"{'Rikoksia pysäytetty:':<30s}{values[0]:<20d}")
-    print(f"{'Kilometrejä lennetty:':<30s}{values[1]:<20d}")
-    print(f"{'Kolikoita pelin lopussa:':<30s}{values[2]:<20d}")
-    print()
+    sql += f" from game where screen_name = '{user_name}' and continent = '{selected_cont}'"
+    values = execute_sql(sql)
+    if not values:
+        print("Tasoa ei ole vielä pelattu.")
+        print()
+    else:
+        values = values[0]
+        print("Parhaat pelituloksesi ovat:")
+        print()
+        print(f"{'Rikoksia pysäytetty:':<30s}{values[0]:<20d}")
+        print(f"{'Kilometrejä lennetty:':<30s}{values[1]:<20d}")
+        print(f"{'Kolikoita pelin lopussa:':<30s}{values[2]:<20d}")
+        print()
     return
 
 
@@ -501,9 +521,9 @@ def delete_old_user(user_name): #poistaa vanhan pelaajan kaikki tiedot
     execute_command(sql)
     return
 
-def add_new_user(user_name): #parametreinä kaikki vastaavat pythonista, selectin jälkeiset voisi muuttaa muuttujiksi?
-    sql = f"insert into game (coin, screen_name, crimes_stopped)"
-    sql += f" values (0, '{user_name}', 0)"
+def add_new_user(user_name, player_lvl):
+    sql = f"insert into game (screen_name, continent)"
+    sql += f" values ('{user_name}', '{player_lvl}')"
     execute_command(sql)
     return
 
@@ -529,6 +549,51 @@ def plane_art():
              #@@-          .@@+.
              .:+           .%@. """
     + style.RESET)
+
+
+def ascii_eu():
+    print("""
+    ______                                        
+   / ____/_  ___________  ____  ____  ____  ____ _
+  / __/ / / / / ___/ __ \/ __ \/ __ \/ __ \/ __ `/
+ / /___/ /_/ / /  / /_/ / /_/ / /_/ / /_/ / /_/ / 
+/_____/\__,_/_/   \____/\____/ .___/ .___/\__,_/  
+                            /_/   /_/             
+""")
+
+
+def ascii_aa():
+    print("""
+    ___              _      
+   /   | ____ ______(_)___ _
+  / /| |/ __ `/ ___/ / __ `/
+ / ___ / /_/ (__  ) / /_/ / 
+/_/  |_\__,_/____/_/\__,_/  
+
+""")
+
+
+def ascii_us():
+    print("""
+    ___                        _ __         __ 
+   /   |  ____ ___  ___  _____(_) /______ _/ /_
+  / /| | / __ `__ \/ _ \/ ___/ / //_/ __ `/ __/
+ / ___ |/ / / / / /  __/ /  / / ,< / /_/ / /_  
+/_/  |_/_/ /_/ /_/\___/_/  /_/_/|_|\__,_/\__/  
+
+""")
+
+
+def ascii_af():
+    print("""
+    ___    ____     _ __   __        
+   /   |  / __/____(_) /__/ /______ _
+  / /| | / /_/ ___/ / //_/ //_/ __ `/
+ / ___ |/ __/ /  / / ,< / ,< / /_/ / 
+/_/  |_/_/ /_/  /_/_/|_/_/|_|\__,_/  
+
+""")
+
 
 def new_line_for_tip(ans):
     chars = 165
@@ -747,11 +812,12 @@ if new_or_player(user_name):
     while True:
         new_old_game = int(
             input(
-                "Haluatko jatkaa vanhaa peliä [1] vai aloittaa kokonaan uuden pelin [2]?: "
+                "Jatka peliä vanhoilla tiedoilla [1] vai nollaa vanhat tiedot ja aloita kokonaan uusi peli [2]?: "
             )
         )
-
-        if new_old_game == 2:  # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
+        if new_old_game == 1:
+            show_scores()
+        elif new_old_game == 2:  # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
             delete_old_user(user_name)
             print()
             print(
@@ -766,7 +832,6 @@ if new_or_player(user_name):
                     break
             if instructions == "1":
                 game_instructions()
-            add_new_user(user_name)
         break
 if not new_or_player(user_name):
     print("")
@@ -779,7 +844,6 @@ if not new_or_player(user_name):
             break
     if instructions == "1":
         game_instructions()
-    add_new_user(user_name)
 
 # answer = new_or_player(user_name)
 
@@ -789,6 +853,7 @@ new_or_player(user_name)
 
 while True:
     player_lvl = difficulty_lvl()
+    add_new_user(user_name, player_lvl)
     if player_lvl == "1":
         while True:
             print("")
