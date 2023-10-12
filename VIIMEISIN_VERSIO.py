@@ -351,7 +351,7 @@ def end_game(
             "Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
         )
     print(
-        f"Olet estänyt näin{crime_stopped4} rikosta kaikista rikoksista ja sinulla on loistava määrä"
+        f"Olet estänyt näin {crime_stopped4} rikosta kaikista rikoksista ja sinulla on loistava määrä "
         f"HETACOINS:ia {coin} ja olet matkustanut {km} kilometriä." + style.RESET
     )
 
