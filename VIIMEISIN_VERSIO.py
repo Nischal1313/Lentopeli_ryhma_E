@@ -61,9 +61,8 @@ def if_africa():
                 km2,
                 round_nro2,
             )
-            end_game(crime_stopped4, coin4, km3, location_atm3, "Egypti")
-            save(coin4, km3, crime_stopped4, user_name)
-            compare(crime_stopped4, km3, coin4, user_name)
+            end_game(crime_stopped4, coin4, km3, location_atm3, "Egypti", 18444)
+            compare_save(crime_stopped4, km3, coin4, user_name)
         else:
                 print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     else:
@@ -122,9 +121,8 @@ def if_amerikka():
                 km2,
                 round_nro2,
             )
-            end_game(crime_stopped4, coin4, km3, location_atm3, "Kanada")
-            save(coin4, km3, crime_stopped4, user_name)
-            compare(crime_stopped4, km3, coin4, user_name)
+            end_game(crime_stopped4, coin4, km3, location_atm3, "Kanada", 33515)
+            compare_save(crime_stopped4, km3, coin4, user_name)
         else:
             print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     else:
@@ -182,9 +180,8 @@ def if_asia():
                 km2,
                 round_nro2,
             )
-            end_game(crime_stopped4, coin4, km3, location_atm3)
-            save(coin4, km3, crime_stopped4, user_name)
-            compare(crime_stopped4, km3, coin4, user_name)
+            end_game(crime_stopped4, coin4, km3, location_atm3, 14515) # correct country name puuttuu??
+            compare_save(crime_stopped4, km3, coin4, user_name)
         else:
             print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     else:
@@ -234,9 +231,8 @@ def if_eurooppa():
                 km2,
                 round_nro2,
             )
-            end_game(crime_stopped4, coin4, km3, location_atm3, "Espanja")
-            save(coin4, km3, crime_stopped4, user_name)
-            compare(crime_stopped4, km3, coin4, user_name)
+            end_game(crime_stopped4, coin4, km3, location_atm3, "Espanja", 6539)
+            compare_save(crime_stopped4, km3, coin4, user_name)
         else:
             print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     else:
@@ -340,24 +336,27 @@ def end_game(
             "kilometriä." + style.RESET,
         )
 
-def compare(crime_stopped4, km3, coin4, user_name): # korjaa silleen että päivittää kaikki tiedot ja korjaa sql lauseet
+def compare_save(crime_stopped4, km3, coin4, user_name): # korjaa silleen että päivittää kaikki tiedot ja korjaa sql lauseet
     sql = "select crimes_stopped, km_travelled, coin"
     sql += f" from game where screen_name = '{user_name}'"
     values = execute_sql(sql)[0]
-    if crime_stopped4 > values[0]:
-        sql = ("update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
+    if not values[1]:
+        sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
+        sql += f"where screen_name = '{user_name}'"
+        execute_command(sql)
+    elif crime_stopped4 > values[0]:
+        sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
         sql += f"where screen_name = '{user_name}'"
         execute_command(sql)
     elif crime_stopped4 == values[0]:
-        if not values[1]:
-            sql = f"update game set km_travelled = {km3}"
-            execute_command(sql)
         if km3 < values[1]:
-            sql = "update game set km_travelled = {km3} where screen_name = '{user_name}'"
+            sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
+            sql += f"where screen_name = '{user_name}'"
             execute_command(sql)
         elif km3 == values[1]:
             if coin4 > values[2]:
-                sql = "update game set coin = {coin4} where screen_name = '{user_name}'"
+                sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
+                sql += f"where screen_name = '{user_name}'"
                 execute_command(sql)
     return
 
@@ -432,7 +431,7 @@ def youre_here(airport_name):
 
 
 def youre_going(next_country):
-    sql = "select longitude_deg, latitude_deg"
+    sql = "select latitude_deg, longitude_deg"
     sql += " from airport where airport.iso_country"
     sql += " = (select iso_country from country"
     sql += f" where country.name = '{next_country}')"
@@ -448,14 +447,6 @@ def oikea_matka(distance, right_distance):
     if distance == right_distance:
         penalty = right_distance
     return penalty
-
-
-def save(coin4, km3, crime_stopped4, user_name):
-    # parametreinä kaikki arvot, jotka tulee aaltosulkeiden väliin.
-    sql = f"update game set coin = {coin4}, km_travelled = {km3},"
-    sql += f" crimes_stopped = {crime_stopped4} where screen_name = '{user_name}'"
-    execute_command(sql)
-    return
 
 def delete_old_user(user_name): #poistaa vanhan pelaajan kaikki tiedot
     sql = f"delete from game where screen_name = '{user_name}'"
