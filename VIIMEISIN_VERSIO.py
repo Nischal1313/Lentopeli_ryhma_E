@@ -21,7 +21,7 @@ def if_africa():
     coin1, crime_stopped1, km, location_atm, round_nro = game(
         "Murtala Muhammed International Airport",
         "Etelä-Afrikka",
-        4767,
+        4768,
         4,
         0,
         "Nigeria",
@@ -32,7 +32,7 @@ def if_africa():
     coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
         "Cape Town International Airport",
         "Burundi",
-        3569,
+        3570,
         coin1,
         crime_stopped1,
         location_atm,
@@ -43,7 +43,7 @@ def if_africa():
         coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
             "Bujumbura International Airport",
             "Sierra Leone",
-            4899,
+            4900,
             coin2,
             crime_stopped2,
             location_atm1,
@@ -103,7 +103,7 @@ def if_amerikka():
         coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
             "McCarran International Airport",
             "Brasilia",
-            9975,
+            9976,
             coin2,
             crime_stopped2,
             location_atm1,
@@ -162,7 +162,7 @@ def if_asia():
         coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
             "Hamad International Airport",
             "Malesia",
-            5910,
+            5911,
             coin2,
             crime_stopped2,
             location_atm1,
@@ -173,7 +173,7 @@ def if_asia():
             coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
                 "Kuala Lumpur International Airport",
                 "Etelä-Korea",
-                4601,
+                4602,
                 coin3,
                 crime_stopped3,
                 location_atm2,
@@ -202,7 +202,7 @@ def if_eurooppa():
     coin2, crime_stopped2, km1, location_atm1, round_nro1 = game(
         "Berlin Brandenburg Airport",
         "Islanti",
-        2412,
+        2439,
         coin1,
         crime_stopped1,
         location_atm,
@@ -213,7 +213,7 @@ def if_eurooppa():
         coin3, crime_stopped3, km2, location_atm2, round_nro2 = game(
             "Keflavik International Airport",
             "Italia",
-            3071,
+            3090,
             coin2,
             crime_stopped2,
             location_atm1,
