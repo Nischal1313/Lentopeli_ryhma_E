@@ -5,9 +5,9 @@ import mysql.connector
 yhteys = mysql.connector.connect(
     host="localhost",
     port=3306,
-    database="karkuteilla5",
+    database="karkuteilla",
     user="root",
-    password="MVicheata01",
+    password="rotallaonvaljaat",
     autocommit=True,
 )
 
@@ -69,7 +69,7 @@ def game(
         distance1 = youre_here(f"{airport_name}")
         distance2 = youre_going(f"{next_country}")
 
-        distance = GD(distance1, distance2).km
+        distance = round(GD(distance1, distance2).km)
 
         if next_country != correct_country_name:
             crimes_stopped = crimes_stopped
@@ -100,14 +100,14 @@ def game(
             distance1 = youre_here(f"{airport_name}")
             distance2 = youre_going(f"{next_country}")
 
-            distance = GD(distance1, distance2).km
+            distance = round(GD(distance1, distance2).km)
         else:
             coins -= 1
             warning(coins)
             distance1 = youre_here(f"{airport_name}")
             distance2 = youre_going(f"{next_country}")
 
-            distance = GD(distance1, distance2).km
+            distance = round(GD(distance1, distance2).km)
 
     penalty = oikea_matka(distance, right_distance)
     player_km += penalty
@@ -119,7 +119,7 @@ def game(
 def if_africa():
     coin1, crime_stopped1, km, location_atm, round_nro = game(
         "Murtala Muhammed International Airport",
-        "Etelä-Afrikka",
+        "Etelä-afrikka",
         4768,
         4,
         0,
@@ -302,7 +302,7 @@ def if_asia():
         if coin3 > 0:
             coin4, crime_stopped4, km3, location_atm3, round_nro3 = game(
                 "Kuala Lumpur International Airport",
-                "Etelä-Korea",
+                "Etelä-korea",
                 4602,
                 coin3,
                 crime_stopped3,
@@ -311,7 +311,7 @@ def if_asia():
                 round_nro2,
             )
             end_game(
-                crime_stopped4, coin4, km3, location_atm3, "Etelä-Korea", 14515
+                crime_stopped4, coin4, km3, location_atm3, "Etelä-korea", 14515
             )  # correct country name puuttuu??
             compare_save(crime_stopped4, km3, coin4, user_name)
         else:
@@ -474,7 +474,7 @@ def end_game(
         print(
             f"Olet estänyt näin {style.GREEN}{crime_stopped4} {style.RESET}{style.BLUE}rikosta kaikista rikoksista ja "
             f"sinulla on loistava määrä"
-            f"HETACOINS:ia {style.GREEN}{coin}{style.RESET} {style.BLUE}ja olet matkustanut {style.RESET}{style.GREEN}"
+            f" HETACOINS:ia {style.GREEN}{coin}{style.RESET} {style.BLUE}ja olet matkustanut {style.RESET}{style.GREEN}"
             f"{km}{style.RESET}{style.BLUE} kilometriä." + style.RESET
         )
 
