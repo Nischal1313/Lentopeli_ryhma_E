@@ -329,9 +329,8 @@ def end_game(
         print(
             "Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
         )
-        print(
-        f"Olet estänyt näin {crime_stopped4} rikosta kaikista rikoksista ja sinulla on loistava määrä "
-        f"HETACOINS:ia {coin} ja olet matkustanut {km} kilometriä." + style.RESET)
+        print( f"Olet estänyt näin{style.GREEN}{crime_stopped4} {style.RESET}{style.BLUE}rikosta kaikista rikoksista ja sinulla on loistava määrä"
+        f"HETACOINS:ia {style.GREEN}{coin}{style.RESET} ja olet matkustanut {style.GREEN}{km}{style.RESET}kilometriä." + style.RESET)
 
 def compare_save(crime_stopped4, km3, coin4, user_name): # korjaa silleen että päivittää kaikki tiedot ja korjaa sql lauseet
     sql = "select crimes_stopped, km_travelled, coin"
