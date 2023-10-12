@@ -180,7 +180,7 @@ def if_asia():
                 km2,
                 round_nro2,
             )
-            end_game(crime_stopped4, coin4, km3, location_atm3, 14515) # correct country name puuttuu??
+            end_game(crime_stopped4, coin4, km3, location_atm3, "Etelä-Korea", 14515) # correct country name puuttuu??
             compare_save(crime_stopped4, km3, coin4, user_name)
         else:
             print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
