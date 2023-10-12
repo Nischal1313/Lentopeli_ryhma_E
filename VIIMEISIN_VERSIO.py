@@ -251,61 +251,9 @@ def end_game(
     crime_stopped4, coin, km, location_atm3, correct_country_name, continent_km
 ):
     if (
-        location_atm3 == correct_country_name
-        and 3 <= crime_stopped4 <= 4
-        and km / continent_km < 1.30
-        and coin <= 9
-    ):
-        print(
-            style.BLUE
-            + "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät."
-        )
-        print(
-            "Kansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty."
-        )
-        print(
-            "Sinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka."
-        )
-        print(
-            "Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
-        )
-        print(
-            "Olet estänyt näin",
-            crime_stopped4,
-            "rikosta kaikista rikoksista ja sinulla on",
-            coin,
-            "HETACOINS:ia ja olet matkustanut",
-            km,
-            "kilometriä.",
-            style.RESET,
-        )
-    if (
-        location_atm3 == correct_country_name
-        and 3 <= crime_stopped4 <= 4
-        and km / continent_km < 1.30
-        and coin > 9
-    ):
-        print(
-            style.BLUE
-            + "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät."
-        )
-        print(
-            "Kansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty."
-        )
-        print(
-            "Sinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka."
-        )
-        print(
-            "Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
-        )
-    print(
-        f"Olet estänyt näin{crime_stopped4} rikosta kaikista rikoksista ja sinulla on loistava määrä"
-        f"HETACOINS:ia {coin} ja olet matkustanut {km} kilometriä." + style.RESET
-    )
-    if (
         location_atm3 != correct_country_name
         or crime_stopped4 < 3
-        or km / continent_km < 1.30
+        or km / continent_km > 1.30
     ):
         print(
             style.RED + "Pimeys vallitsee, kun seisot hävinneenä lentokentän varjoissa."
@@ -335,6 +283,58 @@ def end_game(
             km,
             "kilometriä." + style.RESET,
         )
+    if (
+        location_atm3 == correct_country_name
+        and 3 <= crime_stopped4
+        and km / continent_km < 1.30
+        and coin <= 9
+    ):
+        print(
+            style.BLUE
+            + "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät."
+        )
+        print(
+            "Kansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty."
+        )
+        print(
+            "Sinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka."
+        )
+        print(
+            "Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
+        )
+        print(
+            "Olet estänyt näin",
+            crime_stopped4,
+            "rikosta kaikista rikoksista ja sinulla on",
+            coin,
+            "HETACOINS:ia ja olet matkustanut",
+            km,
+            "kilometriä.",
+            style.RESET,
+        )
+    if (
+        location_atm3 == correct_country_name
+        and 3 <= crime_stopped4
+        and km / continent_km < 1.30
+        and coin > 9
+    ):
+        print(
+            style.BLUE
+            + "Onnittelut agentti! Olet suorittanut vaarallisen matkasi ympäri maailmaa, ja tulokset ovat selvät."
+        )
+        print(
+            "Kansainväliset rikolliset ovat nyt telkien takana, heidän suunnitelmansa paljastettu ja rikokset estetty."
+        )
+        print(
+            "Sinä ja agenttiryhmäsi onnistuitte, ja maailma on nyt turvallisempi paikka."
+        )
+        print(
+            "Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
+        )
+    print(
+        f"Olet estänyt näin{crime_stopped4} rikosta kaikista rikoksista ja sinulla on loistava määrä"
+        f"HETACOINS:ia {coin} ja olet matkustanut {km} kilometriä." + style.RESET
+    )
 
 def compare_save(crime_stopped4, km3, coin4, user_name): # korjaa silleen että päivittää kaikki tiedot ja korjaa sql lauseet
     sql = "select crimes_stopped, km_travelled, coin"
