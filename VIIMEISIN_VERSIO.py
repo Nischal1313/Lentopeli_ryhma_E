@@ -5,9 +5,9 @@ import sys
 yhteys = mysql.connector.connect(
     host="localhost",
     port=3306,
-    database="karkuteilla",
+    database="karkuteilla5",
     user="root",
-    password="maailmanilmaa",
+    password="MVicheata01",
     autocommit=True,
 )
 
@@ -64,27 +64,8 @@ def if_africa():
             end_game(crime_stopped4, coin4, km3, location_atm3, "Egypti", 18444)
             compare_save(crime_stopped4, km3, coin4, user_name)
         else:
-            print(style.RED +
-                """
-                   ______                        ____                 
-                  / ____/___ _____ ___  ___     / __ \_   _____  _____
-                 / / __/ __ `/ __ `__ \/ _ \   / / / / | / / _ \/ ___/
-                / /_/ / /_/ / / / / / /  __/  / /_/ /| |/ /  __/ /    
-                \____/\__,_/_/ /_/ /_/\___/   \____/ |___/\___/_/     
-            
-                """
-            + style.RESET)
-            print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
+                print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     else:
-        print(style.RED +
-            """
-           ______                        ____                 
-          / ____/___ _____ ___  ___     / __ \_   _____  _____
-         / / __/ __ `/ __ `__ \/ _ \   / / / / | / / _ \/ ___/
-        / /_/ / /_/ / / / / / /  __/  / /_/ /| |/ /  __/ /    
-        \____/\__,_/_/ /_/ /_/\___/   \____/ |___/\___/_/     
-        
-        """+ style.RESET)
         print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     print("")
     while True:
@@ -328,9 +309,7 @@ def end_game(
             coin,
             "HETACOINS:ia ja olet matkustanut",
             km,
-            "kilometriä.",
-            style.RESET,
-        )
+            "kilometriä."+ style.RESET)
     if (
         location_atm3 == correct_country_name
         and 3 <= crime_stopped4
@@ -350,7 +329,9 @@ def end_game(
         print(
             "Olet saavuttanut legendaarisen maineen agenttien joukossa, voitto on sinun!"
         )
-
+        print(
+        f"Olet estänyt näin {crime_stopped4} rikosta kaikista rikoksista ja sinulla on loistava määrä "
+        f"HETACOINS:ia {coin} ja olet matkustanut {km} kilometriä." + style.RESET)
 
 def compare_save(crime_stopped4, km3, coin4, user_name): # korjaa silleen että päivittää kaikki tiedot ja korjaa sql lauseet
     sql = "select crimes_stopped, km_travelled, coin"
@@ -374,13 +355,6 @@ def compare_save(crime_stopped4, km3, coin4, user_name): # korjaa silleen että 
                 sql = f"update game set crimes_stopped = {crime_stopped4}, km_travelled = {km3}, coin = {coin4} "
                 sql += f"where screen_name = '{user_name}'"
                 execute_command(sql)
-    return
-
-def game_instructions():
-    print(style.YELLOW +"\nHetacoins: \nPelin alussa pelaajalla on 4 kolikkoa. Lentäminen maksaa 1 kolikon, ja lisävihje maksaa 1 kolikon. \nJos lennät oikeaan kohteeseen ilman lisävihjettä, saat 2 kolikkoa lisää. Jos lennät oikeaan kohteeseen \nlisävihjeen kanssa, saat 1 kolikon. Jos kolikot loppuu, häviät pelin.\n")
-    print("Kilometrit: \nLennetyt kilometrit + mahdolliset kilometri rangaistukset. Kilometri rangaistuksen saa, \njos lentää väärään kohteeseen. Rangaistus on matkan pituudesta riippuen (lennetty matka - oikea matka) * 2 \ntai (oikeamatka - lennetty matka) * 2, ja tämä lisätään kilometrimäärään.\n")
-    print("Lentäminen: \nLennät kohteeseen valitsemalla valtion, johon saatu vihje viittaa. \nSaat ilmoituksen mille lentokentälle lensit, ja pysäytettyjen rikosten määrä kasvaa \njos olit ajoissa pysäyttämäsää rikoksen, eli lensit oikein.\n")
-    print("Voittaminen: \nVoitat pelin jos pysäytit vähintään 3 rikosta, eli lensit oikein kolmesti, \nsekä päädyit oikealle lentokentälle. Jos kilometrisi ylittävät oikein lennetyt kilometrit 30%, \ntuhlasit kilometrejä ja et lentänyt ympäristöystävällisesti, eli häviät pelin. \nJos kolikkosi ovat 10 tai yli, lensit taloudellisesti vastuullisesti, ja saat tästä ekstra maininnan!"+style.RESET)
     return
 
 def warning(coins):
@@ -652,7 +626,7 @@ def game(
 
             distance = GD(distance1, distance2).km
 
-    penalty = oikea_matka(distance, 257)
+    penalty = oikea_matka(distance,right_distance)
     player_km += penalty
 
     return coins, crimes_stopped, round(player_km), next_country, rounds_played
@@ -725,27 +699,15 @@ if new_or_player(user_name):
         if new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
             delete_old_user(user_name)
             print(
-                "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin\n"
+                "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin"
             )
-            while True:
-                instructions = input("Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2]: ")
-                if instructions == "1" or instructions == "2":
-                    break
-            if instructions == "1":
-                game_instructions()
             add_new_user(user_name)
         break
 if not new_or_player(user_name):
     print("")
     print(
-        "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin\n"
+        "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin"
     )
-    while True:
-        instructions = input("Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2]: ")
-        if instructions == "1" or instructions == "2":
-            break
-    if instructions == "1":
-        game_instructions()
     add_new_user(user_name)
 
 
