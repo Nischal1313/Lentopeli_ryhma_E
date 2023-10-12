@@ -402,6 +402,25 @@ def if_country_exist(next_country):
     return answer
 
 
+def game_instructions():
+    print(
+        style.YELLOW
+        + "\nHetacoins: \nPelin alussa pelaajalla on 4 kolikkoa. Lentäminen maksaa 1 kolikon, ja lisävihje maksaa 1 kolikon. \nJos lennät oikeaan kohteeseen ilman lisävihjettä, saat 2 kolikkoa lisää. Jos lennät oikeaan kohteeseen \nlisävihjeen kanssa, saat 1 kolikon. Jos kolikot loppuu, häviät pelin.\n"
+    )
+    print(
+        "Kilometrit: \nLennetyt kilometrit + mahdolliset kilometri rangaistukset. Kilometri rangaistuksen saa, \njos lentää väärään kohteeseen. Rangaistus on matkan pituudesta riippuen (lennetty matka - oikea matka) * 2 \ntai (oikeamatka - lennetty matka) * 2, ja tämä lisätään kilometrimäärään.\n"
+    )
+    print(
+        "Lentäminen: \nLennät kohteeseen valitsemalla valtion, johon saatu vihje viittaa. \nSaat ilmoituksen mille lentokentälle lensit, ja pysäytettyjen rikosten määrä kasvaa \njos olit ajoissa pysäyttämäsää rikoksen, eli lensit oikein.\n"
+    )
+    print(
+        "Voittaminen: \nVoitat pelin jos pysäytit vähintään 3 rikosta, eli lensit oikein kolmesti, \nsekä päädyit oikealle lentokentälle. Jos kilometrisi ylittävät oikein lennetyt kilometrit 30%, \ntuhlasit kilometrejä ja et lentänyt ympäristöystävällisesti, eli häviät pelin. \nJos kolikkosi ovat 10 tai yli, lensit taloudellisesti vastuullisesti, ja saat tästä ekstra maininnan!"
+        + style.RESET
+    )
+    return
+
+
+
 class style:
     BLACK = "\033[30m"
     RED = "\033[31m"
@@ -700,22 +719,40 @@ if new_or_player(user_name):
     # voisko tähän pompauttaa kuvan, jossa on intro ja pelin ohjeet pelaajalle?
     print("")
     while True:
-        new_old_game = int(input("Haluatko jatkaa vanhaa peliä [1] vai aloittaa kokonaan uuden pelin [2]?: "))
+        new_old_game = int(
+            input(
+                "Haluatko jatkaa vanhaa peliä [1] vai aloittaa kokonaan uuden pelin [2]?: "
+            )
+        )
 
-        if new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
+        if new_old_game == 2:  # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
             delete_old_user(user_name)
             print(
-                "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin"
+                "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET,
+                "uuteen peliin\n",
             )
+            while True:
+                instructions = input(
+                    "Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2]: "
+                )
+                if instructions == "1" or instructions == "2":
+                    break
+            if instructions == "1":
+                game_instructions()
             add_new_user(user_name)
         break
 if not new_or_player(user_name):
     print("")
-    print(
-        "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin"
-    )
+    print("Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin\n")
+    while True:
+        instructions = input(
+            "Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2]: "
+        )
+        if instructions == "1" or instructions == "2":
+            break
+    if instructions == "1":
+        game_instructions()
     add_new_user(user_name)
-
 
 # answer = new_or_player(user_name)
 
