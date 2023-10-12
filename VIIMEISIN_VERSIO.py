@@ -729,6 +729,7 @@ if new_or_player(user_name):
 
         if new_old_game == 2:  # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
             delete_old_user(user_name)
+            print()
             print(
                 "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET,
                 "uuteen peliin\n",
