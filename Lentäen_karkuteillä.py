@@ -12,6 +12,110 @@ yhteys = mysql.connector.connect(
 )
 
 
+# Peli pelataan game-funktion sisällä
+def game(
+    airport_name,
+    correct_country_name,
+    right_distance,
+    coins,
+    crimes_stopped,
+    location_atm,
+    player_km,
+    rounds_played,
+):
+    rounds_played += 1
+
+    for x in welcome_to(location_atm):
+        print(style.RED + f"Welcome to", x[0] + style.RESET)
+        print("")
+
+    stats(player_km, coins, crimes_stopped, rounds_played)
+
+    for x in get_first_tip(airport_name):
+        new_line_for_tip(x[0])
+        print("")
+    print(
+        "Saamasi tiedon mukaan sinun pitäisi päättää mihin valtioon matkustat seuraavaksi."
+    )
+    print("")
+    print(
+        "Mikäli tietosi perusteella et pysty valitsemaan valtiota, voimme mahdollisuuksien mukaan hankkia sinulle lisää tietoa."
+    )
+    print("")
+    while True:
+        player_choise = str(
+            input(
+                "[1] Matkustan saamani tiedon perusteella, "
+                "[2] Yrittäkää kerätä lisää tietoa rikollisen seuraavasta kohteesta: "
+            )
+        )
+        print("")
+        if player_choise == "1" or player_choise == "2":
+            break
+
+    if player_choise == "1":
+        next_country = str(input("Anna valtion nimi: ")).capitalize()
+        print("")
+        while True:
+            answer = if_country_exist(next_country)
+            if not answer:
+                next_country = input(str("Anna valtion nimi: ")).capitalize()
+                print("")
+            else:
+                break
+        if next_country == correct_country_name:
+            coins += 2
+            crimes_stopped += 1
+        distance1 = youre_here(f"{airport_name}")
+        distance2 = youre_going(f"{next_country}")
+
+        distance = GD(distance1, distance2).km
+
+        if next_country != correct_country_name:
+            crimes_stopped = crimes_stopped
+            coins -= 1
+            warning(coins)
+
+    if player_choise == "2":
+        coins -= 1
+        warning(coins)
+        stats(player_km, coins, crimes_stopped, rounds_played)
+        print("")
+
+        for x in get_second_tip(airport_name):
+            new_line_for_tip(x[0])
+        next_country = str(input("Anna valtion nimi: ")).capitalize()
+        print("")
+        while True:
+            answer = if_country_exist(next_country)
+            if not answer:
+                next_country = input(str("Anna valtion nimi: ")).capitalize()
+                print("")
+            else:
+                break
+
+        if next_country == correct_country_name:
+            crimes_stopped += 1
+            coins += 1
+            distance1 = youre_here(f"{airport_name}")
+            distance2 = youre_going(f"{next_country}")
+
+            distance = GD(distance1, distance2).km
+        else:
+            coins -= 1
+            warning(coins)
+            distance1 = youre_here(f"{airport_name}")
+            distance2 = youre_going(f"{next_country}")
+
+            distance = GD(distance1, distance2).km
+
+    penalty = oikea_matka(distance, right_distance)
+    player_km += penalty
+
+    return coins, crimes_stopped, round(player_km), next_country, rounds_played
+
+
+# Afrikka-taso
 def if_africa():
     coin1, crime_stopped1, km, location_atm, round_nro = game(
         "Murtala Muhammed International Airport",
@@ -90,14 +194,15 @@ def if_africa():
         print("Sinun HETACOINS on nollilla, jonka takia hävisit tason tässä vaiheessa!")
     print("")
     while True:
-        print("Haluatko pelata tason uudestaan?")
-        AF_answer = str(input("KYLLÄ[1] , EN[2]: "))
+        print("Haluatko pelata saman tason uudestaan?")
+        AF_answer = str(input("[1] KYLLÄ, [2] EN: "))
         print("")
         if AF_answer == "1" or AF_answer == "2":
             break
     return AF_answer
 
 
+# Amerikat-taso
 def if_amerikka():
     coin1, crime_stopped1, km, location_atm, round_nro = game(
         "José Marti International Airport",
@@ -153,13 +258,14 @@ def if_amerikka():
     print("")
     while True:
         print("Haluatko pelata tason uudestaan?")
-        US_answer = str(input("KYLLÄ[1] , EN[2]: "))
+        US_answer = str(input("[1] KYLLÄ,[2] EN: "))
         print("")
         if US_answer == "1" or US_answer == "2":
             break
     return US_answer
 
 
+# Aasia-taso
 def if_asia():
     coin1, crime_stopped1, km, location_atm, round_nro = game(
         "Kolkata Airport",
@@ -217,13 +323,14 @@ def if_asia():
     print("")
     while True:
         print("Haluatko pelata tason uudestaan?")
-        AA_answer = str(input("KYLLÄ[1] , EN[2]: "))
+        AA_answer = str(input("[1] KYLLÄ,[2] EN: "))
         print("")
         if AA_answer == "1" or AA_answer == "2":
             break
     return AA_answer
 
 
+# Eurooppa-taso
 def if_eurooppa():
     coin1, crime_stopped1, km, location_atm, round_nro = game(
         "Václav Havel Airport Prague", "Saksa", 256, 4, 0, "Praha", 0, 0
@@ -271,17 +378,18 @@ def if_eurooppa():
     print("")
     while True:
         print("Haluatko pelata tason uudestaan?")
-        EU_answer = str(input("KYLLÄ[1] , EN[2]: "))
+        EU_answer = str(input("[1] KYLLÄ,[2] EN: "))
         print("")
         if EU_answer == "1" or EU_answer == "2":
             break
     return EU_answer
 
 
+# Tarkistetaan voittiko pelaaja vai ei
 def end_game(
     crime_stopped4, coin, km, location_atm3, correct_country_name, continent_km
 ):
-    if(
+    if (
         location_atm3 != correct_country_name
         or crime_stopped4 < 3
         or km / continent_km > 1.30
@@ -343,7 +451,7 @@ def end_game(
             km,
             "kilometriä." + style.RESET,
         )
-    if(
+    if (
         location_atm3 == correct_country_name
         and 3 <= crime_stopped4
         and km / continent_km < 1.30
@@ -367,14 +475,12 @@ def end_game(
             f"Olet estänyt näin {style.GREEN}{crime_stopped4} {style.RESET}{style.BLUE}rikosta kaikista rikoksista ja "
             f"sinulla on loistava määrä"
             f"HETACOINS:ia {style.GREEN}{coin}{style.RESET} {style.BLUE}ja olet matkustanut {style.RESET}{style.GREEN}"
-            f"{km}{style.RESET}{style.BLUE} kilometriä."
-            + style.RESET
+            f"{km}{style.RESET}{style.BLUE} kilometriä." + style.RESET
         )
 
 
-def compare_save(
-    crime_stopped4, km3, coin4, user_name
-):  # korjaa silleen että päivittää kaikki tiedot ja korjaa sql lauseet
+# Tarkastetaan onko saatu tulos parempi kuin tietokannassa oleva paras tulos ja tallennetaan jos näin on
+def compare_save(crime_stopped4, km3, coin4, user_name):
     sql = "select crimes_stopped, km_travelled, coin"
     sql += f" from game where screen_name = '{user_name}'"
     values = execute_sql(sql)[0]
@@ -393,6 +499,7 @@ def compare_save(
     return
 
 
+# Jos pelaajan kolikot ovat vähissä, hän saa varoituksen
 def warning(coins):
     if coins == 0:
         print("")
@@ -407,11 +514,12 @@ def warning(coins):
     return
 
 
+# Kysyy halutaanko näyttää parhaat tulokset
 def show_scores():
     while True:
         stats = str(
             input(
-                "Haluatko tarkistaa parhaat pelituloksesi? Valitse kyllä [1] tai ei [2]: "
+                "Haluatko tarkistaa parhaat pelituloksesi? Valitse [1] kyllä tai [2] ei: "
             )
         )
         if stats == "1" or stats == "2":
@@ -420,7 +528,7 @@ def show_scores():
         print()
         selected_cont = str(
             input(
-                "Valitse manner: Eurooppa [1], Amerikat [2], Aasia [3], Afrikka [4] tai lopeta [5]"
+                "Valitse manner: [1] Eurooppa, [2] Amerikat, [3] Aasia, [4] Afrikka tai [5] lopeta: "
             )
         )
         while selected_cont != "5":
@@ -428,12 +536,13 @@ def show_scores():
             best_score(user_name, selected_cont)
             selected_cont = str(
                 input(
-                    "Valitse manner: Eurooppa [1], Amerikat [2], Aasia [3], Afrikka [4] tai lopeta [5]: "
+                    "Valitse manner: [1] Eurooppa, [2] Amerikat, [3] Aasia, [4] Afrikka tai [5] lopeta: "
                 )
             )
     return
 
 
+# Tulostaa parhaat tulokset
 def best_score(user_name, selected_cont):
     sql = "select crimes_stopped, km_travelled, coin"
     sql += f" from game where screen_name = '{user_name}' and continent = '{selected_cont}'"
@@ -452,19 +561,20 @@ def best_score(user_name, selected_cont):
     return
 
 
+# Tulostaa pelaajan statsit pelin aikana
 def stats(player_kilometers, coins, crimes_stopped, rounds_played):
     print("")
     print(
         style.BLUE
         + f" K.M. : {player_kilometers}       "
         + style.RESET
-        + style.RED
+        + style.BLUE
         + f"  HETACOINS: {coins}       "
         + style.RESET
         + style.BLUE
         + f"  Rikokset pysäytetty: {crimes_stopped}       "
         + style.RESET
-        + style.RED
+        + style.BLUE
         + f"  Kierros: {rounds_played}       "
         + style.RESET
     )
@@ -472,6 +582,7 @@ def stats(player_kilometers, coins, crimes_stopped, rounds_played):
     print("")
 
 
+# Tarkastaa valtion olemassaolon tietokannasta
 def if_country_exist(next_country):
     sql = "select name from country "
     sql += f"where name = '{next_country}'"
@@ -479,13 +590,13 @@ def if_country_exist(next_country):
     return answer
 
 
+# Tulostaa pelin ohjeet
 def game_instructions():
     print(
-        style.YELLOW
-        + "\nHetacoins: "
-          "\nPelin alussa pelaajalla on 4 kolikkoa. Lentäminen maksaa 1 kolikon, ja lisävihje maksaa 1 kolikon. "
-          "\nJos lennät oikeaan kohteeseen ilman lisävihjettä, saat 2 kolikkoa lisää. Jos lennät oikeaan kohteeseen "
-          "\nlisävihjeen kanssa, saat 1 kolikon. Jos kolikot loppuu, häviät pelin.\n"
+        style.YELLOW + "\nHetacoins: "
+        "\nPelin alussa pelaajalla on 4 kolikkoa. Lentäminen maksaa 1 kolikon, ja lisävihje maksaa 1 kolikon. "
+        "\nJos lennät oikeaan kohteeseen ilman lisävihjettä, saat 2 kolikkoa lisää. Jos lennät oikeaan kohteeseen "
+        "\nlisävihjeen kanssa, saat 1 kolikon. Jos kolikot loppuu, häviät pelin.\n"
     )
     print(
         "Kilometrit: "
@@ -509,6 +620,7 @@ def game_instructions():
     return
 
 
+# Värit
 class style:
     BLACK = "\033[30m"
     RED = "\033[31m"
@@ -522,6 +634,7 @@ class style:
     RESET = "\033[0m"
 
 
+# Hakee tietokannasta dataa
 def execute_sql(sql):
     cursor = yhteys.cursor()
     cursor.execute(sql)
@@ -529,12 +642,14 @@ def execute_sql(sql):
     return ans
 
 
+# Suorittaa komennon tietokannassa
 def execute_command(sql):
     kursori = yhteys.cursor()
     kursori.execute(sql)
     return
 
 
+# Kertoo missä pelaaja sijaitsee tällä hetkellä
 def youre_here(airport_name):
     sql2 = "SELECT latitude_deg, longitude_deg from airport"
     sql2 += f" Where name = '{airport_name}'"
@@ -542,6 +657,7 @@ def youre_here(airport_name):
     return location
 
 
+# Kertoo minne pelaaja lentää seuraavaksi
 def youre_going(next_country):
     sql = "select latitude_deg, longitude_deg"
     sql += " from airport where airport.iso_country"
@@ -551,6 +667,7 @@ def youre_going(next_country):
     return location
 
 
+# Laskee rangaistuksen
 def oikea_matka(distance, right_distance):
     if right_distance > distance:
         penalty = (right_distance - distance) * 2 + right_distance
@@ -561,12 +678,14 @@ def oikea_matka(distance, right_distance):
     return penalty
 
 
+# Poistaa pelaajan tiedot tietokannasta
 def delete_old_user(user_name):
     sql = f"delete from game where screen_name = '{user_name}'"
     execute_command(sql)
     return
 
 
+# Lisää uuden pelaajan tietokantaan
 def add_new_user(user_name, player_lvl):
     sql = f"insert into game (screen_name, continent)"
     sql += f" values ('{user_name}', '{player_lvl}')"
@@ -652,13 +771,15 @@ def ascii_af():
     )
 
 
+# Jakaa vihjeen ettei se mene terminaalin ulkopuolelle
 def new_line_for_tip(ans):
     chars = 165
     for i in range(0, len(ans), chars):
-        print(style.MAGENTA + ans[i: i + chars], style.RESET)
+        print(style.MAGENTA + ans[i : i + chars], style.RESET)
     return
 
 
+# Hakee ensimmäisen vihjeen
 def get_first_tip(airport_name):
     sql = "Select tip_1 From airport "
     sql += f" where Name = '{airport_name}'"
@@ -666,6 +787,7 @@ def get_first_tip(airport_name):
     return tulos
 
 
+# Hakee toisen vihjeen
 def get_second_tip(airport_name):
     sql = "Select tip_2 From airport "
     sql += f" where name = '{airport_name}'"
@@ -673,13 +795,7 @@ def get_second_tip(airport_name):
     return tulos
 
 
-def youre_here(airport_name):
-    sql2 = "SELECT latitude_deg, longitude_deg from airport"
-    sql2 += f" Where name = '{airport_name}'"
-    sijainti = execute_sql(sql2)
-    return sijainti
-
-
+# Toivottaa pelaajan tervettulleeksi lentokentälle
 def welcome_to(name):
     sql = f"select airport.name from airport,country where airport.iso_country = country.iso_country and "
     sql += f"country.name = '{name}'"
@@ -688,130 +804,14 @@ def welcome_to(name):
     return tulos
 
 
-def if_country_is_real():
-    while True:
-        next_country = str(input("Anna valtion nimi: ")).capitalize()
-        print("")
-        sql = f"select name from country where name ='{next_country}'"
-        tulos = execute_sql(sql)
-        if tulos is not None:
-            tulos = execute_sql(sql)[0]
-            break
-        else:
-            continue
-    return tulos
-
-
-def game(
-    airport_name,
-    correct_country_name,
-    right_distance,
-    coins,
-    crimes_stopped,
-    location_atm,
-    player_km,
-    rounds_played,
-):
-    rounds_played += 1
-
-    for x in welcome_to(location_atm):
-        print(style.RED + f"Welcome to", x[0] + style.RESET)
-        print("")
-
-    stats(player_km, coins, crimes_stopped, rounds_played)
-
-    for x in get_first_tip(airport_name):
-        new_line_for_tip(x[0])
-        print("")
-    print(
-        "Saamasi tiedon mukaan sinun pitäisi päättää mihin valtioon matkustat seuraavaksi."
-    )
-    print("")
-    print(
-        "Mikäli tietosi perusteella et pysty valitsemaan valtiota, voimme mahdollisuuksien mukaan hankkia sinulle lisää tietoa."
-    )
-    print("")
-    while True:
-        player_choise = str(
-            input(
-                "Matkustan saamani tiedon perusteella [1], "
-                "Yrittäkää kerätä lisää tietoa rikollisen seuraavasta kohteesta [2]: "
-            )
-        )
-        print("")
-        if player_choise == "1" or player_choise == "2":
-            break
-
-    if player_choise == "1":
-        next_country = str(input("Anna valtion nimi: ")).capitalize()
-        print("")
-        while True:
-            answer = if_country_exist(next_country)
-            if not answer:
-                next_country = input(str("Anna valtion nimi: ")).capitalize()
-                print("")
-            else:
-                break
-        if next_country == correct_country_name:
-            coins += 2
-            crimes_stopped += 1
-        distance1 = youre_here(f"{airport_name}")
-        distance2 = youre_going(f"{next_country}")
-
-        distance = GD(distance1, distance2).km
-
-        if next_country != correct_country_name:
-            crimes_stopped = crimes_stopped
-            coins -= 1
-            warning(coins)
-
-    if player_choise == "2":
-        coins -= 1
-        warning(coins)
-        stats(player_km, coins, crimes_stopped, rounds_played)
-        print("")
-
-        for x in get_second_tip(airport_name):
-            new_line_for_tip(x[0])
-        print("")
-        next_country = str(input("Anna valtion nimi: ")).capitalize()
-        print("")
-        while True:
-            answer = if_country_exist(next_country)
-            if not answer:
-                next_country = input(str("Anna valtion nimi: ")).capitalize()
-                print("")
-            else:
-                break
-
-        if next_country == correct_country_name:
-            crimes_stopped += 1
-            coins += 1
-            distance1 = youre_here(f"{airport_name}")
-            distance2 = youre_going(f"{next_country}")
-
-            distance = GD(distance1, distance2).km
-        else:
-            coins -= 1
-            warning(coins)
-            distance1 = youre_here(f"{airport_name}")
-            distance2 = youre_going(f"{next_country}")
-
-            distance = GD(distance1, distance2).km
-
-    penalty = oikea_matka(distance, right_distance)
-    player_km += penalty
-
-    return coins, crimes_stopped, round(player_km), next_country, rounds_played
-
-
+# Vaikeustason valinta
 def difficulty_lvl():
     while True:
         print("")
-        print("Haluatko pelata pelin helpolla[1] vai vaikealla[2] vaikeustasolla?")
+        print("Haluatko pelata pelin [1] helpolla vai [2] vaikealla vaikeustasolla?")
         print("")
         difficulty_level = input(
-            str("[1]: Eurooppa tai Amerikat, [2]: Aasia tai Afrikka: ")
+            str("[1] Eurooppa tai Amerikat, [2] Aasia tai Afrikka: ")
         )
         print("")
         if difficulty_level == "1" or difficulty_level == "2":
@@ -819,7 +819,7 @@ def difficulty_lvl():
     if difficulty_level == "1":
         while True:
             easy_level = input(
-                "Valitse vaikeustason manner: Eurooppa[1] tai Amerikat[2]: "
+                "Valitse vaikeustason manner: [1] Eurooppa tai [2] Amerikat: "
             )
             if easy_level == "1" or easy_level == "2":
                 break
@@ -833,7 +833,9 @@ def difficulty_lvl():
 
     if difficulty_level == "2":
         while True:
-            easy_level = input("Valitse vaikeustason manner: Aasia[3] tai Afrikka[4]: ")
+            easy_level = input(
+                "Valitse vaikeustason manner: [3] Aasia tai [4] Afrikka: "
+            )
             if easy_level == "3" or easy_level == "4":
                 break
 
@@ -848,6 +850,7 @@ def difficulty_lvl():
     return easy_level
 
 
+# Tarkastaa onko pelaaja uusi vai vanha pelaaja
 def new_or_player(user_name):
     sql = f"Select screen_name From game where screen_name = '{user_name}'"
     ans = execute_sql(sql)
@@ -869,11 +872,9 @@ if new_or_player(user_name):
     while True:
         new_old_game = str(
             input(
-                "Jatka peliä vanhoilla tiedoilla [1] vai nollaa vanhat tiedot ja aloita kokonaan uusi peli [2]?: "
+                "[1] Jatka peliä vanhoilla tiedoilla vai [2] nollaa vanhat tiedot ja aloita kokonaan uusi peli?: "
             )
-
         )
-        print()
         if new_old_game == "1" or new_old_game == "2":
             break
     if new_old_game == "1":
@@ -888,7 +889,7 @@ if new_or_player(user_name):
         while True:
             print()
             instructions = input(
-                "Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2]: "
+                "Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse [1] kyllä tai [2] ei: "
             )
             if instructions == "1" or instructions == "2":
                 break
@@ -900,7 +901,7 @@ if not new_or_player(user_name):
     print("Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin\n")
     while True:
         instructions = input(
-            "Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2]: "
+            "Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse [1] kyllä tai [2] ei: "
         )
         if instructions == "1" or instructions == "2":
             break
@@ -934,14 +935,15 @@ while True:
             again = if_africa()
             if again == "2":
                 break
-    print("")
-    print("Mitä tasoa haluat pelata seuraavaksi?")
-    print("")
     while True:
-        new_lvl = str(input("PELAA TOISTA TASOA[1], TALLENNA JA LOPETA PELI [2]: "))
+        new_lvl = str(input("[1] Pelaa toista tasoa vai [2] lopeta peli: "))
         if new_lvl == "1" or new_lvl == "2":
             break
     if new_lvl == "1":
+        print("")
+        print("Mitä tasoa haluat pelata seuraavaksi?")
         continue
     if new_lvl == "2":
         break
+
+# miau
