@@ -7,3 +7,7 @@ def game_instructions():
 
 
 game_instructions()
+
+instructions = input("Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2].")
+if instructions == "1":
+    game_instructions()

@@ -7,7 +7,7 @@ yhteys = mysql.connector.connect(
     port=3306,
     database="karkuteilla",
     user="root",
-    password="rotallaonvaljaat",
+    password="maailmanilmaa",
     autocommit=True,
 )
 
@@ -93,7 +93,7 @@ def if_amerikka():
         "Santiago de Chile Airport",
         "US",
         8969,
-        US_coin1,
+        coin1,
         crime_stopped1,
         location_atm,
         km,
@@ -104,7 +104,7 @@ def if_amerikka():
             "McCarran International Airport",
             "Brasilia",
             9975,
-            US_coin2,
+            coin2,
             crime_stopped2,
             location_atm1,
             km1,
@@ -115,7 +115,7 @@ def if_amerikka():
                 "Galeão International Airport",
                 "Kanada",
                 8211,
-                us_coin3,
+                coin3,
                 crime_stopped3,
                 location_atm2,
                 km2,
@@ -709,15 +709,21 @@ if new_or_player(user_name):
         if new_old_game == 2: # OIKEESTI POISTAA SIT KAIKKI HUOM HUOM!!!!!!!!!!!
             delete_old_user(user_name)
             print(
-                "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin"
+                "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin\n"
             )
+            instructions = input("Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2].")
+            if instructions == "1":
+                game_instructions()
             add_new_user(user_name)
         break
 if not new_or_player(user_name):
     print("")
     print(
-        "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin"
+        "Tervetuloa" + style.GREEN + f" {user_name}" + style.RESET, "uuteen peliin\n"
     )
+    instructions = input("Haluatko tarkemman ohjeen pelin pelaamiseen? Valitse kyllä[1] tai ei[2].")
+    if instructions == "1":
+        game_instructions()
     add_new_user(user_name)
 
 
