@@ -1,66 +1,39 @@
-#Ottaa käyttäjä tunnuksen vastaan
-print("Tervetuloa pelaamaan Lentäen Karkuteillä!")
-user_name = input("Anna käyttäjätunnus: ")
+def ascii_eu():
+    print("""
+    ______                                        
+   / ____/_  ___________  ____  ____  ____  ____ _
+  / __/ / / / / ___/ __ \/ __ \/ __ \/ __ \/ __ `/
+ / /___/ /_/ / /  / /_/ / /_/ / /_/ / /_/ / /_/ / 
+/_____/\__,_/_/   \____/\____/ .___/ .___/\__,_/  
+                            /_/   /_/             
+""")
 
-database = ["vikke"]
+def ascii_aa():
+    print("""
+    ___              _      
+   /   | ____ ______(_)___ _
+  / /| |/ __ `/ ___/ / __ `/
+ / ___ / /_/ (__  ) / /_/ / 
+/_/  |_\__,_/____/_/\__,_/  
+                            
+""")
 
-#Ottaa yhteyden tietokantaan
+def ascii_us():
+    print("""
+    ___                        _ __         __ 
+   /   |  ____ ___  ___  _____(_) /______ _/ /_
+  / /| | / __ `__ \/ _ \/ ___/ / //_/ __ `/ __/
+ / ___ |/ / / / / /  __/ /  / / ,< / /_/ / /_  
+/_/  |_/_/ /_/ /_/\___/_/  /_/_/|_|\__,_/\__/  
+                                               
+""")
 
-if user_name in database:
-    print(f"Tervetuloa takaisin {user_name}! Haluatko aloittaa uuden pelin vai jatkaa vanhaa peliä?")
-    new_or_oldgame = input("Paina 1, jos haluat aloittaa uuden pelin. Paina 2, jos haluat jatkaa vanhaa peliä ")
-
-
-if user_name not in database:
-        #tallenna uusi nimi data base
-    print(f"Tervetuloa {user_name} pelaamaan Lentäen karkuteillä!")
-    print("Pelin intro ja lore.")
-
-# else:
-#     get user_name from database
-    # if new_or_oldgame == 1 or user_name not in database or new_or_oldgame == "":
-
-
-#Pelaaja valitsee vaikeus tason
-while True:
-    difficulty_level = input(str("Haluatko pelata pelin helpolla(1) vai vaikealla(2) vaikeustasolla? ") )
-    if difficulty_level == "1" or difficulty_level == "2":
-        break
-def vaikeustasojamanner():
-    if difficulty_level == "1":
-        while True:
-            easy_level = input("Valitse vaikeustason manner: Eurooppa(1) tai Amerikat(2):")
-            if easy_level == "1" or "2":
-                break
-
-        if easy_level == "1":
-            print("Olet valinnut Euroopan.")
-            # print(jetaski)
-            print("Olet saapunut Eurooppaan,tervetuloa Prahan kansainväliseen lentokenttään!")
-            #load level europe
-
-        if easy_level == "2":
-            print("Olet valinnut Amerikat.")
-                # print(jetski)
-            print("Olet saapunut Amerikkaan, tervetuloa Havannan kansainväliseen lentokenttään!")
-
-    if difficulty_level == "2":
-        while True:
-            easy_level = input("Valitse vaikeustason manner: Aasia(1) tai Afrikka(2):")
-            if easy_level == "1" or "2":
-                break
-        if easy_level == "1":
-            print("Olet valinnut Aasian.")
-            # print(jetaski)
-            print("Olet saapunut Aasian,tervetuloa Kalkutan kansainväliseen lentokenttään!")
-            #load level europe
-        if easy_level == "2":
-            print("Olet valinnut Afrikka.")
-            # print(jetski)
-            print("Olet saapunut Afrikka, tervetuloa Etelä-Afrikan kansainväliseen lentokenttään!")
-
-vaikeustasojamanner()
-
-
-
-
+def ascii_af():
+    print("""
+    ___    ____     _ __   __        
+   /   |  / __/____(_) /__/ /______ _
+  / /| | / /_/ ___/ / //_/ //_/ __ `/
+ / ___ |/ __/ /  / / ,< / ,< / /_/ / 
+/_/  |_/_/ /_/  /_/_/|_/_/|_|\__,_/  
+                                     
+""")
